@@ -1,15 +1,14 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    display: grid;
+    display: flex;
     gap: 0.5rem;
-    margin-top: -14rem;
     justify-content: flex-end;
+    text-align: center;
 
     div {
         background: var(--shape);
-        padding: 1rem;
-        border-radius: 2rem;
+        border-radius: 1.5rem;
         color: var(--text-title);
 
         header {
@@ -24,9 +23,8 @@ export const Container = styled.div`
             font-size: 2rem;
             font-weight: 500;
             line-height: 1rem;
-            text-align: center;
         }
-
+        
         &.highlight-background {
             background: var(--green);
             color: #FFF;

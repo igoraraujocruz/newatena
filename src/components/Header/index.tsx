@@ -1,4 +1,4 @@
-import { Container, Content } from '../styles'
+import { Content } from '../styles'
 
 interface HeaderProps {
     onOpenNewTransactionModal: () => void;
@@ -7,10 +7,8 @@ interface HeaderProps {
 export function Header({onOpenNewTransactionModal}: HeaderProps) {
 
     return (
-        <Container>
             <Content>
                 <button type="button" onClick={onOpenNewTransactionModal}>Solicitar Internação</button>
             </Content>
-        </Container>
     )
 }

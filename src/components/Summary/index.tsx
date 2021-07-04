@@ -1,23 +1,24 @@
-import { Container } from './styles'
+import { useOrder } from '../../hooks/useOrder';
 import React from 'react'
 
 export function Summary() {
+    const {orders} = useOrder();
     return (
-        <Container>
+        <>
             <div>
                 <header>
-                    <p>Eletivas</p>
-                    <img src="TESTE" alt="Eletivas" />
+                    <p>Clínicas</p>
+                    <img src="TESTE"/>
                 </header>
-                <strong>10</strong>
+                <strong>{orders.filter(order => order.typeOfHospitalization === 'Clínica').length}</strong>
             </div>
             <div>
                 <header>
-                    <p>Urgentes</p>
-                    <img src="teste"  alt="Urgentes" />
+                    <p>Cirúrgicas</p>
+                    <img src="teste" />
                 </header>
-                <strong>5</strong>
+                <strong>{orders.filter(order => order.typeOfHospitalization === 'Cirúrgica').length}</strong>
             </div>
-        </Container>
+        </>    
     )
 }

@@ -16,7 +16,9 @@ createServer({
         {
           id: 1,
           name: 'João da Silva',
-          typeOfHospitalization: 'deposit',
+          unimedProtocol: '7888885',
+          unimedWallet: '080008898',
+          typeOfHospitalization: 'Clínica',
           sex: 'M',
           amount: 6000,
           createdAt: new Date('2021-02-12 09:00:00'),
@@ -24,7 +26,9 @@ createServer({
         {
           id: 2,
           name: 'Maria Pereira',
-          typeOfHospitalization: 'withdraw',
+          unimedProtocol: '79998989',
+          unimedWallet: '0800546465',
+          typeOfHospitalization: 'Cirúrgica',
           sex: 'F',
           amount: 1100,
           createdAt: new Date('2021-02-14 11:00:00'),

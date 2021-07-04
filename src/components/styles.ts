@@ -1,26 +1,23 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
-    background: var(--blue);
+    background: var(--gray);
 `;
 
 export const Content = styled.div`
-    max-width: 1128px;
     margin: 0 auto;
-
-    padding: 2rem 1rem 12rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
 
     button {
         font-size: 1rem;
         color: #FFF;
-        background: var(--blue-light);
+        background: var(--gray);
         border: 0;
         padding: 0 2rem;
         border-radius: 0.25rem;
-        height: 3rem;
+        height: 2rem;
 
         transition: filter 0.2s;
         
@@ -28,5 +25,4 @@ export const Content = styled.div`
             filter: brightness(0.9);
         }
     }
-    
 `;

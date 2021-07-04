@@ -5,12 +5,12 @@ export const GlobalStyle = createGlobalStyle`
         --background: #f0f2f5;
         --red: #e52e4d;
         --green: #33cc95;
-        --blue: #5429cc;
+        --gray: #2F4F4F;
         --blue-light: #6933ff;
         --orange: #ff512f;
         --orange-light: #f09819;
         --text-title: #363f5f;
-        --text-body: #969cb3;
+        --text-body: #4F4F4F;
         --shape: #ffffff;
     }
 
@@ -36,8 +36,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body, input, textarea, button {
-        font-family: 'Poppins', sans-serif;
-        font-weight: 400;
+        font-family: 'Roboto', sans-serif;
     }
 
     h1, h2, h3, h4, h5, strong {

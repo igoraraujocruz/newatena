@@ -26,11 +26,15 @@ export const Container = styled.div`
                 color: var(--text-body);
             }
 
-            &.deposit {
+            &.Clínica {
                 color: var(--green);
             }
 
-            &.withdraw {
+            &.Cirúrgica {
+                color: var(--red);
+            }
+
+            &.Oncológica {
                 color: var(--red);
             }
         }

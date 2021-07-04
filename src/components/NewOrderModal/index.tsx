@@ -1,5 +1,5 @@
 import Modal from 'react-modal';
-import { Container, OrderTypeContainer, RadioBox } from './styles'
+import { Container, OrderTypeContainer, RadioBox, SexContainer, RadioBoxG } from './styles'
 import closeImg from '../../assets/close.svg'
 import { FormEvent, useState } from 'react';
 import { useOrder } from '../../hooks/useOrder';
@@ -15,7 +15,7 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
     const [unimedProtocol, setUnimedProtocol] = useState('');
     const [unimedWallet, setUnimedWallet] = useState('');
     const [sex, setSex] = useState('');
-    const [typeOfHospitalization, setTypeOfHospitalization] = useState('deposit');
+    const [typeOfHospitalization, setTypeOfHospitalization] = useState('clinica');
 
    async function handleCreateNewTransaction(event: FormEvent) {
         event.preventDefault();
@@ -32,6 +32,7 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
         setUnimedProtocol('');
         setUnimedWallet('');
         setSex('');
+        setTypeOfHospitalization('')
         onRequestClose();
     }
 
@@ -64,16 +65,16 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
                 <OrderTypeContainer>
                     <RadioBox 
                     type="button"
-                    onClick={() => setTypeOfHospitalization('deposit')}
-                    isActive={typeOfHospitalization === 'deposit'}
+                    onClick={() => setTypeOfHospitalization('Clínica')}
+                    isActive={typeOfHospitalization === 'Clínica'}
                     activeColor="green"
                     >
                         <span>Internação Clínica</span>
                     </RadioBox>
                     <RadioBox 
                     type="button"
-                    onClick={() => setTypeOfHospitalization('cirurgica')}
-                    isActive={typeOfHospitalization === 'cirurgica'}
+                    onClick={() => setTypeOfHospitalization('Cirúrgica')}
+                    isActive={typeOfHospitalization === 'Cirúrgica'}
                     activeColor="red"
                     >
                         <span>Internação Cirúrgica</span>
@@ -81,30 +82,33 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
 
                     <RadioBox 
                     type="button"
-                    onClick={() => setTypeOfHospitalization('withdraw')}
-                    isActive={typeOfHospitalization === 'withdraw'}
+                    onClick={() => setTypeOfHospitalization('Oncológica')}
+                    isActive={typeOfHospitalization === 'Oncológica'}
                     activeColor="red"
                     >
                         <span>Internação Oncológica</span>
                     </RadioBox>
+
                 </OrderTypeContainer>
 
-                <RadioBox 
+                <SexContainer>
+                <RadioBoxG 
                     type="button"
-                    onClick={() => setSex('masculine')}
-                    isActive={sex === 'masculine'}
+                    onClick={() => setSex('M')}
+                    isActive={sex === 'M'}
                     activeColor="green"
                     >
                         <span>Masculino</span>
-                    </RadioBox>
-                    <RadioBox 
+                </RadioBoxG>
+                <RadioBoxG 
                     type="button"
-                    onClick={() => setSex('feminine')}
-                    isActive={sex === 'feminine'}
-                    activeColor="red"
+                    onClick={() => setSex('F')}
+                    isActive={sex === 'F'}
+                    activeColor="green"
                     >
                         <span>Femino</span>
-                </RadioBox>
+                </RadioBoxG>
+                </SexContainer>
 
                 <button type="submit">Solicitar</button>
             </Container>             

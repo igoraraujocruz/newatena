@@ -24,7 +24,7 @@ export function OrdersTable() {
                             <td>{order.name}</td>
                             <td>{order.unimedProtocol}</td>
                             <td>{order.unimedWallet}</td>
-                            <td className={order.typeOfHospitalization}>Clínica</td>
+                            <td className={order.typeOfHospitalization}>{order.typeOfHospitalization}</td>
                             <td>{order.sex}</td>
                             <td>{new Intl.DateTimeFormat('pt-BR').format(
                                 new Date(order.createdAt)

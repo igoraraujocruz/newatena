@@ -20,7 +20,7 @@ createServer({
           unimedWallet: '080008898',
           typeOfHospitalization: 'Clínica',
           sex: 'M',
-          amount: 6000,
+          sector: 'internado',
           createdAt: new Date('2021-02-12 09:00:00'),
         },
         {
@@ -30,7 +30,7 @@ createServer({
           unimedWallet: '0800546465',
           typeOfHospitalization: 'Cirúrgica',
           sex: 'F',
-          amount: 1100,
+          sector: 'pronto-socorro',
           createdAt: new Date('2021-02-14 11:00:00'),
         }
       ]

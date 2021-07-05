@@ -8,6 +8,7 @@ interface Order {
     unimedWallet: string;
     typeOfHospitalization: string;
     sex: string;
+    sector: string;
     createdAt: string;
 }
  

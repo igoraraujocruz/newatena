@@ -19,7 +19,7 @@ export function OrdersTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.map(order => (
+                    {orders.filter(order => order.sector === 'pronto-socorro').map(order => (
                             <tr key={order.id}>
                             <td>{order.name}</td>
                             <td>{order.unimedProtocol}</td>
@@ -28,7 +28,8 @@ export function OrdersTable() {
                             <td>{order.sex}</td>
                             <td>{new Intl.DateTimeFormat('pt-BR').format(
                                 new Date(order.createdAt)
-                            )}</td>
+                            )}
+                            </td>
                         </tr>
                     ))}
                 </tbody>

@@ -10,10 +10,11 @@ export const Container = styled.div`
         background: var(--shape);
         border-radius: 1.5rem;
         color: var(--text-title);
+        padding: 0.5rem;
 
         header {
             display: flex;
-            align-items: center;
+            justify-content: center;
             width: 6rem;
         }
 

@@ -15,6 +15,7 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
     const [unimedProtocol, setUnimedProtocol] = useState('');
     const [unimedWallet, setUnimedWallet] = useState('');
     const [sex, setSex] = useState('');
+    const [sector, setSector] = useState('pronto-socorro');
     const [typeOfHospitalization, setTypeOfHospitalization] = useState('clinica');
 
    async function handleCreateNewTransaction(event: FormEvent) {
@@ -26,6 +27,7 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
             unimedWallet,
             sex,
             typeOfHospitalization,
+            sector,
         })
 
         setName('');
@@ -34,6 +36,7 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
         setSex('');
         setTypeOfHospitalization('')
         onRequestClose();
+        setSector('')
     }
 
     return (

@@ -1,4 +1,6 @@
 import { Content } from '../styles'
+import * as FaIcons from 'react-icons/fa';
+import {Navbar} from '../Navebar'
 
 interface HeaderProps {
     onOpenNewTransactionModal: () => void;
@@ -7,8 +9,14 @@ interface HeaderProps {
 export function Header({onOpenNewTransactionModal}: HeaderProps) {
 
     return (
+        <>
+            <Navbar />
             <Content>
-                <button type="button" onClick={onOpenNewTransactionModal}>Solicitar Internação</button>
+                
+                <div className="btnRequestOrder"  onClick={onOpenNewTransactionModal}>
+                    <p>Solicitar Internação<FaIcons.FaRegHospital /></p>     
+                </div>
             </Content>
+        </>    
     )
 }

@@ -23,7 +23,7 @@ export function OrdersTable() {
                             <tr key={order.id}>
                             <td>{order.name}</td>
                             <td>{order.unimedProtocol}</td>
-                            <td>{order.unimedWallet}</td>
+                            <td>{order.unimedCard}</td>
                             <td className={order.typeOfHospitalization}>{order.typeOfHospitalization}</td>
                             <td>{order.sex}</td>
                             <td>{new Intl.DateTimeFormat('pt-BR').format(

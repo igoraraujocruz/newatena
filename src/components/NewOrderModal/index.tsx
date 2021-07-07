@@ -3,6 +3,7 @@ import { Container, OrderTypeContainer, RadioBox, SexContainer, RadioBoxG } from
 import closeImg from '../../assets/close.svg'
 import { FormEvent, useState } from 'react';
 import { useOrder } from '../../hooks/useOrder';
+import { useAuth } from '../../hooks/useAuth';
 
 interface NewTransactionModalProps {
     isOpen: boolean;
@@ -11,28 +12,31 @@ interface NewTransactionModalProps {
 
 export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps) {
     const {createOrder} = useOrder();
+    const { user } = useAuth()
     const [name, setName] = useState('');
     const [unimedProtocol, setUnimedProtocol] = useState('');
-    const [unimedWallet, setUnimedWallet] = useState('');
+    const [unimedCard, setUnimedCard] = useState('');
     const [sex, setSex] = useState('');
     const [sector, setSector] = useState('pronto-socorro');
     const [typeOfHospitalization, setTypeOfHospitalization] = useState('clinica');
 
    async function handleCreateNewTransaction(event: FormEvent) {
+
         event.preventDefault();
 
         await createOrder({
             name,
             unimedProtocol,
-            unimedWallet,
+            unimedCard,
             sex,
             typeOfHospitalization,
             sector,
+            requester: user.id
         })
 
         setName('');
         setUnimedProtocol('');
-        setUnimedWallet('');
+        setUnimedCard('');
         setSex('');
         setTypeOfHospitalization('')
         onRequestClose();
@@ -61,8 +65,8 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
                 onChange={event => setUnimedProtocol(event.target.value)}/>
 
                 <input  placeholder="Carteira Unimed"
-                value={unimedWallet} 
-                onChange={event => setUnimedWallet(event.target.value)}
+                value={unimedCard} 
+                onChange={event => setUnimedCard(event.target.value)}
                  />
 
                 <OrderTypeContainer>

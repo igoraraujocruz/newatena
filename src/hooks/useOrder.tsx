@@ -5,10 +5,11 @@ interface Order {
     id: number,
     name: string;
     unimedProtocol: string;
-    unimedWallet: string;
+    unimedCard: string;
     typeOfHospitalization: string;
     sex: string;
     sector: string;
+    requester: string;
     createdAt: string;
 }
  
@@ -31,7 +32,7 @@ export function OrdersProvider({children}: OrdersProviderProps) {
 
     useEffect(() => {
         api.get('orders')
-        .then(response => setOrders(response.data.orders))
+        .then(response => setOrders(response.data))
     }, []);
 
     async function createOrder(orderInput: OrderInput) {

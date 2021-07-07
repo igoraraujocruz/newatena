@@ -1,33 +1,26 @@
 import React from 'react';
-import { useState } from 'react';
 import { GlobalStyle } from './styles/global';
-import { Dashboard } from './components/Dashboard';
-import { Header } from './components/Header';
 import { OrdersProvider } from './hooks/useOrder'
-import { NewOrderModal } from './components/NewOrderModal';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Modal from 'react-modal';
+import {AuthProvider} from './hooks/useAuth'
+import {ToastProvider} from './hooks/useToast'
+import {Routes} from './routes';
 
 Modal.setAppElement('#root');
 
 export function App() {
-  const [isNewOrderModalOpen, setIsNewOrderModalOpen] = useState(false);
-
-  function handleOpenNewTransactionModal() {
-    setIsNewOrderModalOpen(true)
-  }
-
-  function handleCloseNewOrderModal() {
-    setIsNewOrderModalOpen(false)
-  }
+  
   return (
-    <>
-    <OrdersProvider>
-      <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
-      <Dashboard />
-
-      <NewOrderModal isOpen={isNewOrderModalOpen} onRequestClose={handleCloseNewOrderModal}/>
-      <GlobalStyle />
-    </OrdersProvider>  
-    </>
+    <ToastProvider>
+      <AuthProvider>
+        <Router>
+          <OrdersProvider>
+            <Routes />
+            <GlobalStyle />
+          </OrdersProvider>
+        </Router>  
+      </AuthProvider>
+    </ToastProvider>
   );
 }

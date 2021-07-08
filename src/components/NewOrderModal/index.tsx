@@ -5,12 +5,12 @@ import { FormEvent, useState } from 'react';
 import { useOrder } from '../../hooks/useOrder';
 import { useAuth } from '../../hooks/useAuth';
 
-interface NewTransactionModalProps {
+interface NewOrderModalProps {
     isOpen: boolean;
     onRequestClose: () => void
 }
 
-export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps) {
+export function NewOrderModal({isOpen, onRequestClose}: NewOrderModalProps) {
     const {createOrder} = useOrder();
     const { user } = useAuth()
     const [name, setName] = useState('');
@@ -20,7 +20,7 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
     const [sector, setSector] = useState('pronto-socorro');
     const [typeOfHospitalization, setTypeOfHospitalization] = useState('clinica');
 
-   async function handleCreateNewTransaction(event: FormEvent) {
+   async function handleCreateNewOrder(event: FormEvent) {
 
         event.preventDefault();
 
@@ -53,7 +53,7 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
             <img src={closeImg} alt="Fechar modal" onClick={onRequestClose}/>
         </button>    
             
-            <Container onSubmit={handleCreateNewTransaction}>   
+            <Container onSubmit={handleCreateNewOrder}>   
                 <h2>Solicitar Internação</h2>
                 
                 <input placeholder="Nome" 

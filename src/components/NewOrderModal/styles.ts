@@ -1,7 +1,20 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {darken, transparentize} from 'polished'
 
+const apperFromLeft = keyframes`
+	from {
+		opacity: 0;
+		transform: translateX(-50px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+`;
+
 export const Container = styled.form`
+    animation: ${apperFromLeft} 1s;
+    
     h2 {
         color: var(--text-title);
         font-size: 1.5rem;

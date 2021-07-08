@@ -19,10 +19,11 @@ export function Urgency() {
 
     return (
         <>
-            <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
+            <Header />
             <NewOrderModal isOpen={isNewOrderModalOpen} onRequestClose={handleCloseNewOrderModal}/>
             <Container>
-                <Summary />
+                <h1>Pronto Socorro</h1>
+                <Summary onOpenNewTransactionModal={handleOpenNewTransactionModal}/>
                 <OrdersTable />
             </Container>
         </>

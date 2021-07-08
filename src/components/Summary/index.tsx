@@ -1,9 +1,14 @@
 import { useOrder } from '../../hooks/useOrder';
 import {Container} from './styles';
-import React from 'react'
+import Button from '../Button';
+import * as FaIcons from 'react-icons/fa';
 
-export function Summary() {
-    const {orders} = useOrder();
+interface SummaryProps {
+    onOpenNewTransactionModal: () => void;
+}
+
+export function Summary({onOpenNewTransactionModal}: SummaryProps) {
+    const { orders } = useOrder();
     return (
         <Container>
             <div>
@@ -18,6 +23,8 @@ export function Summary() {
                 </header>
                 <strong>{orders.filter(order => order.typeOfHospitalization === 'Cirúrgica').length}</strong>
             </div>
+
+            <Button type="submit" onClick={onOpenNewTransactionModal}>Solicitar Internação <FaIcons.FaHospital/></Button>
         </Container>    
     )
 }

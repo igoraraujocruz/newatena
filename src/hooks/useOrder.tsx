@@ -15,6 +15,7 @@ interface Order {
  
 type OrderInput = Omit<Order, 'id' | 'createdAt'>;
 
+
 interface OrdersProviderProps {
     children: ReactNode;
 }
@@ -28,7 +29,6 @@ const OrdersContext = createContext<OrdersContextData>({} as OrdersContextData);
 
 export function OrdersProvider({children}: OrdersProviderProps) {
     const [orders, setOrders] = useState<Order[]>([]);
-
 
     useEffect(() => {
         api.get('orders')

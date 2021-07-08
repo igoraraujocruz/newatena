@@ -2,21 +2,17 @@ import { Content } from '../styles'
 import * as FaIcons from 'react-icons/fa';
 import {Navbar} from '../Navebar'
 
-interface HeaderProps {
-    onOpenNewTransactionModal: () => void;
-}
 
-export function Header({onOpenNewTransactionModal}: HeaderProps) {
+
+export function Header() {
 
     return (
         <>
             <Navbar />
-            <Content>
-                
-                <div className="btnRequestOrder"  onClick={onOpenNewTransactionModal}>
-                    <p>Solicitar Internação<FaIcons.FaRegHospital /></p>     
-                </div>
+            <Content> 
             </Content>
         </>    
     )
 }
+
+<FaIcons.FaRegHospital />

@@ -1,34 +1,31 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    display: flex;
+    display: grid;
     gap: 0.5rem;
     justify-content: flex-end;
     text-align: center;
 
     div {
         background: var(--shape);
-        border-radius: 1.5rem;
+        border-radius: 0.5rem;
         color: var(--text-title);
-        padding: 0.5rem;
 
-        header {
-            display: flex;
-            justify-content: center;
-            width: 6rem;
-        }
 
         strong {
             display: block;
-            margin-top: 1rem;
-            font-size: 2rem;
-            font-weight: 500;
-            line-height: 1rem;
+            margin-top: 0.3rem;
+            font-size: 1rem;
+            font-weight: 500px;
         }
         
         &.highlight-background {
             background: var(--green);
             color: #FFF;
         }
+    }
+
+    Button {
+        width: 10rem;
     }
 `;

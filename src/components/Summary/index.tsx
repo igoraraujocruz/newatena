@@ -30,13 +30,13 @@ export function Summary({onOpenNewTransactionModal}: SummaryProps) {
                 <header>
                     <p>Clínicas</p>
                 </header>
-                <strong>{orders.filter(order => order.typeOfHospitalization === 'Clínica').length}</strong>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Clínica').length}</strong>
             </div>
             <div>
                 <header>
                     <p>Cirúrgicas</p>
                 </header>
-                <strong>{orders.filter(order => order.typeOfHospitalization === 'Cirúrgica').length}</strong>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Cirúrgica').length}</strong>
             </div>
 
             {roles.map(role => role.name).includes('doctor_urgency') && <Button type="submit" onClick={onOpenNewTransactionModal}>Solicitar Internação <FaIcons.FaHospital/></Button>}

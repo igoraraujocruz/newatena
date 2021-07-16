@@ -13,7 +13,7 @@ interface Order {
     createdAt: string;
 }
  
-type OrderInput = Omit<Order, 'id' | 'createdAt'>;
+type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester'>;
 
 
 interface OrdersProviderProps {
@@ -35,12 +35,19 @@ export function OrdersProvider({children}: OrdersProviderProps) {
         .then(response => setOrders(response.data))
     }, []);
 
+    console.log(orders)
+
     async function createOrder(orderInput: OrderInput) {
+     
+     const token = localStorage.getItem('@Atena:token');   
      const response = await api.post('/orders', {
          ...orderInput,
-         createdAt: new Date(),
+     }, {
+         headers: {
+            authorization: `Bearer ${token}`
+         }
      })
-     
+          
      const { order } = response.data;
 
      setOrders([

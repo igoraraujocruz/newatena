@@ -35,8 +35,6 @@ export function OrdersProvider({children}: OrdersProviderProps) {
         .then(response => setOrders(response.data))
     }, []);
 
-    console.log(orders)
-
     async function createOrder(orderInput: OrderInput) {
      
      const token = localStorage.getItem('@Atena:token');   

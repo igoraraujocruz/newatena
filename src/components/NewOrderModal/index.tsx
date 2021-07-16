@@ -31,42 +31,45 @@ export function NewOrderModal({isOpen, onRequestClose}: NewOrderModalProps) {
 
    const handleCreateNewOrder = useCallback(
     async (data: OrderFormData) => {
+
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
-      });
+        })
 
         await schema.validate(data, {
           abortEarly: false,
         })
 
         await createOrder({
-            name: data.name,
-            sector: data.sector,
-            sex: data.sex,
-            typeOfHospitalization: data.typeOfHospitalization,
-            unimedCard: data.unimedCard,
-            unimedProtocol: data.unimedProtocol,
-        });
+          name: data.name,
+          sector: data.sector,
+          sex: data.sex,
+          typeOfHospitalization: data.typeOfHospitalization,
+          unimedCard: data.unimedCard,
+          unimedProtocol: data.unimedProtocol,
+        })
+        
 
         onRequestClose();
-      
-      } catch (err) {
-          if (err instanceof Yup.ValidationError) {
-            const errors =  getValidationErrors(err);
-            formRef.current?.setErrors(errors);
-          }
-
+        
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors =  getValidationErrors(error);
+          formRef.current?.setErrors(errors);
+        }
+        
         addToast({
           type: 'error',
           title: 'Erro na autenticação',
           description: 'Nsei q carai',
-        });
+        })
       }
     },
     [createOrder, addToast],
   );
+
     return (
         <Modal isOpen={isOpen} 
         onRequestClose={onRequestClose}

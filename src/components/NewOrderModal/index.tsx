@@ -1,48 +1,72 @@
 import Modal from 'react-modal';
-import { Container, OrderTypeContainer, RadioBox, SexContainer, RadioBoxG } from './styles'
 import closeImg from '../../assets/close.svg'
-import { FormEvent, useState } from 'react';
 import { useOrder } from '../../hooks/useOrder';
-import { useAuth } from '../../hooks/useAuth';
+import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
+import { useRef, useCallback } from 'react';
+import { useToast } from '../../hooks/useToast';
+import getValidationErrors from '../../utils/getValidationErrors';
+import * as Yup from 'yup';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
-interface NewTransactionModalProps {
+interface NewOrderModalProps {
     isOpen: boolean;
     onRequestClose: () => void
 }
 
-export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps) {
+interface OrderFormData {
+    name: string
+    sector: string
+    sex: string
+    typeOfHospitalization: string
+    unimedCard: string
+    unimedProtocol: string
+  }
+
+export function NewOrderModal({isOpen, onRequestClose}: NewOrderModalProps) {
+    const formRef = useRef<FormHandles>(null);
+    const { addToast } = useToast();
     const {createOrder} = useOrder();
-    const { user } = useAuth()
-    const [name, setName] = useState('');
-    const [unimedProtocol, setUnimedProtocol] = useState('');
-    const [unimedCard, setUnimedCard] = useState('');
-    const [sex, setSex] = useState('');
-    const [sector, setSector] = useState('pronto-socorro');
-    const [typeOfHospitalization, setTypeOfHospitalization] = useState('clinica');
 
-   async function handleCreateNewTransaction(event: FormEvent) {
+   const handleCreateNewOrder = useCallback(
+    async (data: OrderFormData) => {
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
+      });
 
-        event.preventDefault();
-
-        await createOrder({
-            name,
-            unimedProtocol,
-            unimedCard,
-            sex,
-            typeOfHospitalization,
-            sector,
-            requester: user.id
+        await schema.validate(data, {
+          abortEarly: false,
         })
 
-        setName('');
-        setUnimedProtocol('');
-        setUnimedCard('');
-        setSex('');
-        setTypeOfHospitalization('')
-        onRequestClose();
-        setSector('')
-    }
+        await createOrder({
+            name: data.name,
+            sector: data.sector,
+            sex: data.sex,
+            typeOfHospitalization: data.typeOfHospitalization,
+            unimedCard: data.unimedCard,
+            unimedProtocol: data.unimedProtocol,
+        });
 
+        onRequestClose();
+      
+      } catch (err) {
+          if (err instanceof Yup.ValidationError) {
+            const errors =  getValidationErrors(err);
+            formRef.current?.setErrors(errors);
+          }
+
+        addToast({
+          type: 'error',
+          title: 'Erro na autenticação',
+          description: 'Nsei q carai',
+        });
+      }
+    },
+    [createOrder, addToast],
+  );
     return (
         <Modal isOpen={isOpen} 
         onRequestClose={onRequestClose}
@@ -53,72 +77,17 @@ export function NewOrderModal({isOpen, onRequestClose}: NewTransactionModalProps
             <img src={closeImg} alt="Fechar modal" onClick={onRequestClose}/>
         </button>    
             
-            <Container onSubmit={handleCreateNewTransaction}>   
+            <Form ref={formRef} onSubmit={handleCreateNewOrder}>   
                 <h2>Solicitar Internação</h2>
                 
-                <input placeholder="Nome" 
-                value={name} 
-                onChange={event => setName(event.target.value)}/>
-
-                <input placeholder="Atendimento" 
-                value={unimedProtocol} 
-                onChange={event => setUnimedProtocol(event.target.value)}/>
-
-                <input  placeholder="Carteira Unimed"
-                value={unimedCard} 
-                onChange={event => setUnimedCard(event.target.value)}
-                 />
-
-                <OrderTypeContainer>
-                    <RadioBox 
-                    type="button"
-                    onClick={() => setTypeOfHospitalization('Clínica')}
-                    isActive={typeOfHospitalization === 'Clínica'}
-                    activeColor="green"
-                    >
-                        <span>Internação Clínica</span>
-                    </RadioBox>
-                    <RadioBox 
-                    type="button"
-                    onClick={() => setTypeOfHospitalization('Cirúrgica')}
-                    isActive={typeOfHospitalization === 'Cirúrgica'}
-                    activeColor="red"
-                    >
-                        <span>Internação Cirúrgica</span>
-                    </RadioBox>
-
-                    <RadioBox 
-                    type="button"
-                    onClick={() => setTypeOfHospitalization('Oncológica')}
-                    isActive={typeOfHospitalization === 'Oncológica'}
-                    activeColor="red"
-                    >
-                        <span>Internação Oncológica</span>
-                    </RadioBox>
-
-                </OrderTypeContainer>
-
-                <SexContainer>
-                <RadioBoxG 
-                    type="button"
-                    onClick={() => setSex('M')}
-                    isActive={sex === 'M'}
-                    activeColor="green"
-                    >
-                        <span>Masculino</span>
-                </RadioBoxG>
-                <RadioBoxG 
-                    type="button"
-                    onClick={() => setSex('F')}
-                    isActive={sex === 'F'}
-                    activeColor="green"
-                    >
-                        <span>Femino</span>
-                </RadioBoxG>
-                </SexContainer>
-
-                <button type="submit">Solicitar</button>
-            </Container>             
+                <Input name="name" type="text" placeholder="nome"/>
+                <Input name="unimedCard" type="text" placeholder="unicard"/>
+                <Input name="unimedProtocol" type="text" placeholder="unimedProtocol"/>
+                <Input name="typeOfHospitalization" type="text" placeholder="typeOfHospitalization"/>
+                <Input name="sex" type="text" placeholder="sex"/>
+                <Input name="sector" type="text" placeholder="sector"/>
+                <Button type="submit">Solicitar</Button>
+            </Form>             
         </Modal>
     )
 }

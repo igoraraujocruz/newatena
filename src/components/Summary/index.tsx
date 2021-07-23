@@ -7,14 +7,14 @@ import {api} from '../../services/api';
 import { useAuth } from '../../hooks/useAuth';
 
 interface SummaryProps {
-    onOpenNewTransactionModal: () => void;
+    onOpenNewOrderModal: () => void;
 }
 
 interface Roles {
     name: string;
 }
 
-export function Summary({onOpenNewTransactionModal}: SummaryProps) {
+export function Summary({onOpenNewOrderModal}: SummaryProps) {
     const { user } = useAuth()
     const [roles, setRole] = useState<Roles[]>([])
 
@@ -39,7 +39,7 @@ export function Summary({onOpenNewTransactionModal}: SummaryProps) {
                 <strong>{orders.filter(order => order?.typeOfHospitalization === 'Cirúrgica').length}</strong>
             </div>
 
-            {roles.map(role => role.name).includes('doctor_urgency') && <Button type="submit" onClick={onOpenNewTransactionModal}>Solicitar Internação <FaIcons.FaHospital/></Button>}
+            {roles.map(role => role.name).includes('doctor_urgency') && <Button type="submit" onClick={onOpenNewOrderModal}>Solicitar Internação <FaIcons.FaHospital/></Button>}
   
             
         </Container>    

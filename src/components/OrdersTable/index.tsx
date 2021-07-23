@@ -1,9 +1,26 @@
 import { useOrder } from '../../hooks/useOrder';
 import { Container } from './styles';
+import Button from '../Button';
 
-export function OrdersTable() {
+interface Order {
+    id: string;
+    name: string
+    sector: string
+    sex: string
+    typeOfHospitalization: string
+    unimedCard: string
+    unimedProtocol: string
+  }
+  
 
-    const {orders} = useOrder();
+interface OrdersTableProps {
+    onOpenEditOrderModal: (order: Order) => void;
+    handleEditModalOrder: (order: Order) => void;
+}
+
+export function OrdersTable({onOpenEditOrderModal}: OrdersTableProps) {
+
+    const {orders, removeOrder} = useOrder();
 
     return (
         <Container>
@@ -30,6 +47,8 @@ export function OrdersTable() {
                                 new Date(order.createdAt)
                             )}
                             </td>
+                            <Button type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</Button>
+                            <Button type="submit" onClick={()=> removeOrder(order.id)}>Deletar</Button>
                         </tr>
                         ))
                     }

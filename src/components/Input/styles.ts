@@ -13,7 +13,7 @@ export const Container = styled.div<ContainerProps>`
         height: 50px;
         display: flex;
         align-items: center;
-		border: 2px solid #232129;
+		border: 2px solid #fff;
 		color: #666360;
         & + div {
 			margin-top: 8px;
@@ -51,6 +51,8 @@ export const Error = styled(Tooltip)`
 		margin-right: 10px;
 	}
 	span {
+			margin-bottom: 1.1rem;
+			margin-right: -0.2rem;
 			background: #c53030;
 			color: #FFF;
 			

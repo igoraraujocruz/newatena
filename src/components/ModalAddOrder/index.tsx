@@ -76,7 +76,7 @@ export function ModalAddOrder({isOpen, onRequestClose}: ModalAddOrderProps) {
         })
       }
     },
-    [createOrder, addToast],
+    [createOrder, addToast, onRequestClose],
   );
 
     return (

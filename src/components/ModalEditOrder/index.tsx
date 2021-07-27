@@ -20,6 +20,8 @@ interface Order {
   unimedProtocol: string
 }
 
+type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester'>;
+
 interface ModalEditOrderProps {
     isOpen: boolean;
     onRequestClose: () => void
@@ -34,11 +36,12 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
     const { editOrder } = useOrder();
 
    const handleEditOrder = useCallback(
-    async (data: Order) => {      
+    async (data: OrderInput) => {      
       
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
+          id: Yup.string().required(),
           name: Yup.string().required('Informar o nome do paciente obrigatório'),
           unimedCard: Yup.string().required('Informar o cartão unimed do paciente é obrigatório'),
           typeOfHospitalization: Yup.string().required('Informar o tipo de internação é obrigatório'),
@@ -50,17 +53,7 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
           abortEarly: false,
         })
 
-        console.log(currentOrder)
-
-        await editOrder({
-          id: currentOrder.id,
-          name: currentOrder.name,
-          sector: currentOrder.sector,
-          sex: currentOrder.sex,
-          typeOfHospitalization: currentOrder.typeOfHospitalization,
-          unimedCard: currentOrder.unimedCard,
-          unimedProtocol: currentOrder.unimedProtocol,
-        })
+        await editOrder(data)
 
         onRequestClose();
         
@@ -77,7 +70,7 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
         })
       }
     },
-    [addToast, editOrder],
+    [addToast, editOrder, onRequestClose],
   );
 
     return (

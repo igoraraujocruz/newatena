@@ -1,4 +1,3 @@
-import React from 'react';
 import { GlobalStyle } from './styles/global';
 import { OrdersProvider } from './hooks/useOrder'
 import { BrowserRouter as Router } from 'react-router-dom';

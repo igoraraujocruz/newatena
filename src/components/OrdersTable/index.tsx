@@ -14,8 +14,7 @@ interface Order {
   
 
 interface OrdersTableProps {
-    onOpenEditOrderModal: (order: Order) => void;
-    handleEditModalOrder: (order: Order) => void;
+    onOpenEditOrderModal: (order: Order) => void;   
 }
 
 export function OrdersTable({onOpenEditOrderModal}: OrdersTableProps) {
@@ -49,8 +48,8 @@ export function OrdersTable({onOpenEditOrderModal}: OrdersTableProps) {
                             </td>
                             <Button type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</Button>
                             <Button type="submit" onClick={()=> removeOrder(order.id)}>Deletar</Button>
-                        </tr>
-                        ))
+                            </tr>
+                    ))
                     }
                     
                 </tbody>

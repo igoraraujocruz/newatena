@@ -8,6 +8,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import * as Yup from 'yup';
 import Input from '../Input';
 import Button from '../Button';
+import { useOrder } from '../../hooks/useOrder';
 
 interface Order {
   id: string;
@@ -19,33 +20,22 @@ interface Order {
   unimedProtocol: string
 }
 
-interface EditOrder {
-  name: string
-  sector: string
-  sex: string
-  typeOfHospitalization: string
-  unimedCard: string
-  unimedProtocol: string
-}
-
 interface ModalEditOrderProps {
     isOpen: boolean;
     onRequestClose: () => void
-    handleUpdateOrder: (data: EditOrder) => void;
-    editingOrder: Order;
+    currentOrder: Order;
 }
 
 
-export function ModalEditOrder({isOpen, onRequestClose, handleUpdateOrder, editingOrder}: ModalEditOrderProps) {
+export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEditOrderProps) {
 
   const formRef = useRef<FormHandles>(null);
     const { addToast } = useToast();
+    const { editOrder } = useOrder();
 
    const handleEditOrder = useCallback(
-    async (data: EditOrder) => {
-
-      handleUpdateOrder(data);
-
+    async (data: Order) => {      
+      
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
@@ -58,6 +48,18 @@ export function ModalEditOrder({isOpen, onRequestClose, handleUpdateOrder, editi
 
         await schema.validate(data, {
           abortEarly: false,
+        })
+
+        console.log(currentOrder)
+
+        await editOrder({
+          id: currentOrder.id,
+          name: currentOrder.name,
+          sector: currentOrder.sector,
+          sex: currentOrder.sex,
+          typeOfHospitalization: currentOrder.typeOfHospitalization,
+          unimedCard: currentOrder.unimedCard,
+          unimedProtocol: currentOrder.unimedProtocol,
         })
 
         onRequestClose();
@@ -75,7 +77,7 @@ export function ModalEditOrder({isOpen, onRequestClose, handleUpdateOrder, editi
         })
       }
     },
-    [addToast],
+    [addToast, editOrder],
   );
 
     return (
@@ -85,10 +87,10 @@ export function ModalEditOrder({isOpen, onRequestClose, handleUpdateOrder, editi
         className="react-modal-content"
         >
         <button type="button" className="react-modal-close">
-            <img src={closeImg} alt="Fechar modal" onClick={onRequestClose}/>
+            <img src={closeImg} alt="Fechar modal" onClick={onRequestClose} />
         </button>    
             
-            <Form ref={formRef} onSubmit={handleEditOrder} initialData={editingOrder}>   
+            <Form ref={formRef} onSubmit={handleEditOrder} initialData={currentOrder}>   
                 <h2>Editar Internação</h2>
                 
                 <Input name="name" type="text" placeholder="Nome do Paciente" />

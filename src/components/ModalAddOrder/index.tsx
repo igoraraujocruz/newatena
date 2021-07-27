@@ -3,7 +3,7 @@ import closeImg from '../../assets/close.svg'
 import { useOrder } from '../../hooks/useOrder';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback } from 'react';
 import { useToast } from '../../hooks/useToast';
 import getValidationErrors from '../../utils/getValidationErrors';
 import * as Yup from 'yup';
@@ -22,7 +22,7 @@ interface OrderFormData {
     typeOfHospitalization: string
     unimedCard: string
     unimedProtocol: string
-  }
+}
 
 export function ModalAddOrder({isOpen, onRequestClose}: ModalAddOrderProps) {
     const formRef = useRef<FormHandles>(null);
@@ -53,6 +53,11 @@ export function ModalAddOrder({isOpen, onRequestClose}: ModalAddOrderProps) {
           typeOfHospitalization: data.typeOfHospitalization,
           unimedCard: data.unimedCard,
           unimedProtocol: data.unimedProtocol,
+        })
+
+        addToast({
+          type: 'success',
+          title: 'Solicitação criada com sucesso',
         })
         
 

@@ -12,17 +12,9 @@ interface Order {
     requester: string;
     createdAt: string;
 }
-
-interface EditOrder {
-  name: string
-  sector: string
-  sex: string
-  typeOfHospitalization: string
-  unimedCard: string
-  unimedProtocol: string
-}
  
 type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester'>;
+type OrderEdit = Omit<Order, 'createdAt' | 'requester'>;
 
 
 interface OrdersProviderProps {
@@ -33,14 +25,14 @@ interface OrdersContextData {
     orders: Order[];
     createOrder: (order: OrderInput) => Promise<void>;
     removeOrder: (orderId: string) => void;
-    editOrder: (order: Order) => Promise<void>;
+    editOrder: (order: OrderEdit) => Promise<void>;
 }
 
 const OrdersContext = createContext<OrdersContextData>({} as OrdersContextData);
 
 export function OrdersProvider({children}: OrdersProviderProps) {
     const [orders, setOrders] = useState<Order[]>([]);
-    const [editingOrder, setEditingOrder] = useState<EditOrder>({} as EditOrder);
+    const [editingOrder, setEditingOrder] = useState<OrderEdit>({} as OrderEdit);
 
     useEffect(() => {
         api.get('orders')
@@ -78,19 +70,14 @@ export function OrdersProvider({children}: OrdersProviderProps) {
 
 
     //Mexer no edit
-    const editOrder = async (order: Order) => {
-      
-        try {
-          const orderUpdated = await api.put(`/orders/${order.id}`, {
-            ...editingOrder, ...order
-          });
+    const editOrder = async (orderEdit: OrderEdit) => {
+      const orderUpdated = await api.put(`/orders/${orderEdit.id}`, {
+        ...editingOrder, ...orderEdit
+      });
 
-          const ordersUpdated = orders.map(order => order.id !== orderUpdated.data.id ? order : orderUpdated.data);
+      const ordersUpdated = orders.map(order => order.id !== orderUpdated.data.id ? order : orderUpdated.data);
 
-          setOrders(ordersUpdated)
-        } catch(err) {
-          console.log(err)
-        }
+      setOrders(ordersUpdated)
     };
 
     return (

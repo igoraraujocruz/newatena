@@ -41,7 +41,6 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
-          id: Yup.string().required(),
           name: Yup.string().required('Informar o nome do paciente obrigatório'),
           unimedCard: Yup.string().required('Informar o cartão unimed do paciente é obrigatório'),
           typeOfHospitalization: Yup.string().required('Informar o tipo de internação é obrigatório'),
@@ -53,7 +52,15 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
           abortEarly: false,
         })
 
-        await editOrder(data)
+        await editOrder({
+          id: currentOrder.id,
+          name: data.name,
+          sector: data.sector,
+          sex: data.sex,
+          typeOfHospitalization: data.typeOfHospitalization,
+          unimedCard: data.unimedCard,
+          unimedProtocol: data.unimedProtocol
+        })
 
         onRequestClose();
         
@@ -70,7 +77,7 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
         })
       }
     },
-    [addToast, editOrder, onRequestClose],
+    [addToast, editOrder, onRequestClose, currentOrder],
   );
 
     return (

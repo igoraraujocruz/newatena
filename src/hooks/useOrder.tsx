@@ -9,7 +9,6 @@ interface Order {
     typeOfHospitalization: string;
     sex: string;
     sector: string;
-    requester: string;
     createdAt: string;
 }
  
@@ -25,14 +24,13 @@ interface OrdersContextData {
     orders: Order[];
     createOrder: (order: OrderInput) => Promise<void>;
     removeOrder: (orderId: string) => void;
-    editOrder: (order: OrderInput) => Promise<void>;
+    editOrder: (order: OrderEdit) => Promise<void>;
 }
 
 const OrdersContext = createContext<OrdersContextData>({} as OrdersContextData);
 
 export function OrdersProvider({children}: OrdersProviderProps) {
     const [orders, setOrders] = useState<Order[]>([]);
-    const [editingOrder, setEditingOrder] = useState<Order>({} as Order);
 
     useEffect(() => {
         api.get('orders')
@@ -69,11 +67,11 @@ export function OrdersProvider({children}: OrdersProviderProps) {
     };
 
 
-    const editOrder = async (order: OrderInput) => {
+    const editOrder = async (order: OrderEdit) => {
       try {
         const orderUpdated = await api.put(
-          `/orders/${editingOrder.id}`,
-          { ...editingOrder, ...order },
+          `/orders/${order.id}`,
+          { ...order },
         );
   
         const ordersUpdated = orders.map(order =>

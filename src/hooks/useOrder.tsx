@@ -9,7 +9,6 @@ interface Order {
     typeOfHospitalization: string;
     sex: string;
     sector: string;
-    requester: string;
     createdAt: string;
 }
  
@@ -32,7 +31,6 @@ const OrdersContext = createContext<OrdersContextData>({} as OrdersContextData);
 
 export function OrdersProvider({children}: OrdersProviderProps) {
     const [orders, setOrders] = useState<Order[]>([]);
-    const [editingOrder, setEditingOrder] = useState<OrderEdit>({} as OrderEdit);
 
     useEffect(() => {
         api.get('orders')
@@ -69,16 +67,22 @@ export function OrdersProvider({children}: OrdersProviderProps) {
     };
 
 
-    //Mexer no edit
-    const editOrder = async (orderEdit: OrderEdit) => {
-      const orderUpdated = await api.put(`/orders/${orderEdit.id}`, {
-        ...editingOrder, ...orderEdit
-      });
-
-      const ordersUpdated = orders.map(order => order.id !== orderUpdated.data.id ? order : orderUpdated.data);
-
-      setOrders(ordersUpdated)
-    };
+    const editOrder = async (order: OrderEdit) => {
+      try {
+        const orderUpdated = await api.put(
+          `/orders/${order.id}`,
+          { ...order },
+        );
+  
+        const ordersUpdated = orders.map(order =>
+          order.id !== orderUpdated.data.id ? order : orderUpdated.data,
+        );
+  
+        setOrders(ordersUpdated);
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
     return (
         <OrdersContext.Provider value={{ orders, createOrder, removeOrder, editOrder }}>

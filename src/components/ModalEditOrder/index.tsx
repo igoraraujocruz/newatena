@@ -20,6 +20,8 @@ interface Order {
   unimedProtocol: string
 }
 
+type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester'>;
+
 interface ModalEditOrderProps {
     isOpen: boolean;
     onRequestClose: () => void
@@ -34,7 +36,7 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
     const { editOrder } = useOrder();
 
    const handleEditOrder = useCallback(
-    async (data: Order) => {      
+    async (data: OrderInput) => {      
       
       try {
         formRef.current?.setErrors({});
@@ -50,16 +52,14 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
           abortEarly: false,
         })
 
-        console.log(currentOrder)
-
         await editOrder({
           id: currentOrder.id,
-          name: currentOrder.name,
-          sector: currentOrder.sector,
-          sex: currentOrder.sex,
-          typeOfHospitalization: currentOrder.typeOfHospitalization,
-          unimedCard: currentOrder.unimedCard,
-          unimedProtocol: currentOrder.unimedProtocol,
+          name: data.name,
+          sector: data.sector,
+          sex: data.sex,
+          typeOfHospitalization: data.typeOfHospitalization,
+          unimedCard: data.unimedCard,
+          unimedProtocol: data.unimedProtocol
         })
 
         onRequestClose();
@@ -77,7 +77,7 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
         })
       }
     },
-    [addToast, editOrder],
+    [addToast, editOrder, onRequestClose, currentOrder],
   );
 
     return (

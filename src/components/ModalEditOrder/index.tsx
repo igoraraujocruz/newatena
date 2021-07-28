@@ -59,7 +59,7 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
           sex: data.sex,
           typeOfHospitalization: data.typeOfHospitalization,
           unimedCard: data.unimedCard,
-          unimedProtocol: data.unimedProtocol
+          unimedProtocol: data.unimedProtocol,
         })
 
         onRequestClose();

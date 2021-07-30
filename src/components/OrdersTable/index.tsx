@@ -1,6 +1,8 @@
 import { useOrder } from '../../hooks/useOrder';
 import { Container } from './styles';
 import Button from '../Button';
+import * as EditIcon from 'react-icons/gr';
+import * as DeleteIcon from 'react-icons/ri';
 
 interface Order {
     id: string;
@@ -14,12 +16,13 @@ interface Order {
   
 
 interface OrdersTableProps {
-    onOpenEditOrderModal: (order: Order) => void;   
+    onOpenEditOrderModal: (order: Order) => void;
+    onOpenDeleteOrderModal: (order: Order) => void;   
 }
 
-export function OrdersTable({onOpenEditOrderModal}: OrdersTableProps) {
+export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal}: OrdersTableProps) {
 
-    const {orders, removeOrder} = useOrder();
+    const {orders} = useOrder();
 
     return (
         <Container>
@@ -46,8 +49,11 @@ export function OrdersTable({onOpenEditOrderModal}: OrdersTableProps) {
                                 new Date(order.createdAt)
                             )}
                             </td>
-                            <Button type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</Button>
-                            <Button type="submit" onClick={()=> removeOrder(order.id)}>Deletar</Button>
+                            <td>
+                            <EditIcon.GrEdit type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</EditIcon.GrEdit>
+                            <DeleteIcon.RiDeleteBin6Line type="submit" onClick={()=> onOpenDeleteOrderModal(order)}>Deletar</DeleteIcon.RiDeleteBin6Line>
+                            </td>
+                            
                             </tr>
                     ))
                     }

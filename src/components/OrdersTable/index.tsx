@@ -15,11 +15,13 @@ interface Order {
     requester: string;
     orderHistories: [
       {
+        id: string;
         message: string;
         user_id: string;
+        createdAt: string;
       }
     ]  
-}
+  }
   
 
 interface OrdersTableProps {

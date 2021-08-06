@@ -1,5 +1,5 @@
 import { Container } from './styles'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Summary } from '../../components/Summary'
 import { Header } from '../../components/Header';
 import { ModalAddOrder } from '../../components/ModalAddOrder';
@@ -20,8 +20,10 @@ interface Order {
     requester: string;
     orderHistories: [
       {
+        id: string;
         message: string;
         user_id: string;
+        createdAt: string;
       }
     ]  
   }
@@ -79,7 +81,6 @@ export function Urgency() {
             <ModalDeleteOrder isOpen={isDeleteOrderModalOpen} onRequestClose={handleCloseOrderDeleteModal} currentOrder={currentOrder}/>
             <ModalOrderHistory isOpen={isHistoryOrderModalOpen} onRequestClose={handleCloseOrderHistoryModal} currentOrder={currentOrder}/>
             <Container>
-                <h1>Pronto Socorro</h1>
                 <Summary onOpenNewOrderModal={handleOpenNewOrderModal} />
                 <OrdersTable onOpenEditOrderModal={handleOpenOrderEditModal} onOpenDeleteOrderModal={handleOpenOrderDeleteModal} onOpenHistoryOrderModal={handleOpenOrderHistoryModal}/>
             </Container>

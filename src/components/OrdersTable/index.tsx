@@ -1,26 +1,34 @@
 import { useOrder } from '../../hooks/useOrder';
 import { Container } from './styles';
-import Button from '../Button';
 import * as EditIcon from 'react-icons/gr';
-import * as DeleteIcon from 'react-icons/ri';
+import {RiDeleteBin6Line, RiHistoryFill}from 'react-icons/ri';
 
 interface Order {
-    id: string;
-    name: string
-    sector: string
-    sex: string
-    typeOfHospitalization: string
-    unimedCard: string
-    unimedProtocol: string
-  }
+    id: string,
+    name: string;
+    unimedProtocol: string;
+    unimedCard: string;
+    typeOfHospitalization: string;
+    sex: string;
+    sector: string;
+    createdAt: string;
+    requester: string;
+    orderHistories: [
+      {
+        message: string;
+        user_id: string;
+      }
+    ]  
+}
   
 
 interface OrdersTableProps {
     onOpenEditOrderModal: (order: Order) => void;
-    onOpenDeleteOrderModal: (order: Order) => void;   
+    onOpenDeleteOrderModal: (order: Order) => void;
+    onOpenHistoryOrderModal: (order: Order) => void;   
 }
 
-export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal}: OrdersTableProps) {
+export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpenHistoryOrderModal}: OrdersTableProps) {
 
     const {orders} = useOrder();
 
@@ -45,13 +53,14 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal}: Orde
                             <td>{order.unimedCard}</td>
                             <td className={order.typeOfHospitalization}>{order.typeOfHospitalization}</td>
                             <td>{order.sex}</td>
-                            <td>{new Intl.DateTimeFormat('pt-BR').format(
+                            <td>{new Intl.DateTimeFormat('pt-BR', {month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', hour12: false}).format(
                                 new Date(order.createdAt)
                             )}
                             </td>
                             <td>
-                            <EditIcon.GrEdit type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</EditIcon.GrEdit>
-                            <DeleteIcon.RiDeleteBin6Line type="submit" onClick={()=> onOpenDeleteOrderModal(order)}>Deletar</DeleteIcon.RiDeleteBin6Line>
+                            <EditIcon.GrEdit className="btnEdit" type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</EditIcon.GrEdit>
+                            <RiHistoryFill size={20} type="submit" onClick={() => onOpenHistoryOrderModal(order)}>Histórico</RiHistoryFill>
+                            <RiDeleteBin6Line size={20} className="deleteBnt" type="submit" onClick={()=> onOpenDeleteOrderModal(order)}>Deletar</RiDeleteBin6Line>
                             </td>
                             
                             </tr>

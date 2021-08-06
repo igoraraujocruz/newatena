@@ -2,18 +2,25 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import { api } from '../services/api';
 
 interface Order {
-    id: string,
-    name: string;
-    unimedProtocol: string;
-    unimedCard: string;
-    typeOfHospitalization: string;
-    sex: string;
-    sector: string;
-    createdAt: string;
+  id: string,
+  name: string;
+  unimedProtocol: string;
+  unimedCard: string;
+  typeOfHospitalization: string;
+  sex: string;
+  sector: string;
+  createdAt: string;
+  requester: string;
+  orderHistories: [
+    {
+      message: string;
+      user_id: string;
+    }
+  ]  
 }
  
-type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester'>;
-type OrderEdit = Omit<Order, 'createdAt' | 'requester'>;
+type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester' | 'orderHistories'>;
+type OrderEdit = Omit<Order, 'createdAt' | 'requester' | 'orderHistories'>;
 
 
 interface OrdersProviderProps {

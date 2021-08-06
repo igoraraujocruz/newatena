@@ -22,7 +22,7 @@ export const Container = styled.div<ContainerProps>`
 			border-color: #c53030;
 		`}
 		${props => props.isFocused && css`
-			border-color: #1C6A33;
+			border-color: #0F2F4F;
 			color: #1C6A33;
 		`}
 		${props => props.isFilled && css`

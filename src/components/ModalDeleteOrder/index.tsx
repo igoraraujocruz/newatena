@@ -8,7 +8,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import * as Yup from 'yup';
 import Button from '../Button';
 import { useOrder } from '../../hooks/useOrder';
-import { Container } from './styles'
+import { Container, Buttons } from './styles'
 
 interface Order {
   id: string;
@@ -65,7 +65,7 @@ export function ModalDeleteOrder({isOpen, onRequestClose, currentOrder}: ModalEd
   );
 
     return (
-      <Container>
+      
         <Modal isOpen={isOpen} 
         onRequestClose={onRequestClose}
         overlayClassName="react-modal-overlay"
@@ -74,15 +74,18 @@ export function ModalDeleteOrder({isOpen, onRequestClose, currentOrder}: ModalEd
         <button type="button" className="react-modal-close">
             <img src={closeImg} alt="Fechar modal" onClick={onRequestClose} />
         </button>    
-            
+        <Container>
             <Form ref={formRef} onSubmit={handleDeleteOrder}>   
-                <h4>Tem certeza que deseja excluir a solicitação de internação de {currentOrder.name}?</h4>
-                <p>Após a confirmação, não será possível recuperar estes mesmos dados</p>
+                <strong>Tem certeza que deseja excluir a solicitação de internação de {currentOrder.name}?</strong>
+                <p>Após a confirmação, não será possível recuperar estes dados</p>
                 
-                <Button type="submit">Confirmar Exclusão</Button>
-                <Button onClick={onRequestClose}>Cancelar</Button>
-            </Form>             
+                <Buttons>
+                  <Button className="btnConfirm" type="submit">Confirmar Exclusão</Button>
+                  <Button onClick={onRequestClose}>Cancelar</Button>
+                </Buttons>
+            </Form>
+        </Container>                   
         </Modal>
-      </Container>  
+      
     )
 }

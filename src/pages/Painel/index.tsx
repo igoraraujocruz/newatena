@@ -31,7 +31,6 @@ export function Painel() {
         .then(response => setRole(response.data.roles))
     }, []);
 
-    //melhorar sistema de roles
     return (
         <>
             <Container>

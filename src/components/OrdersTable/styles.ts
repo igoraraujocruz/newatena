@@ -27,15 +27,40 @@ export const Container = styled.div`
             }
 
             &.Clínica {
-                color: var(--green);
+                color: var(--good-blue);
             }
 
             &.Cirúrgica {
-                color: var(--red);
+                color: var(--good-blue);
             }
 
             &.Oncológica {
+                color: var(--good-blue);
+            }
+
+            &.Covid {
                 color: var(--red);
+            }
+
+            &.UTIP {
+                color: var(--red);
+            }
+
+            &.UTIG {
+                color: var(--red);
+            }
+
+            &.UCO {
+                color: var(--red);
+            }
+
+            .btnEdit {
+                margin-bottom: 0.3rem;
+                cursor: pointer;
+            }
+
+            .btnDelete {
+                cursor: pointer;
             }
         }
     }

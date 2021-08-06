@@ -1,15 +1,17 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    display: grid;
-    gap: 0.5rem;
+    display: flex;
     justify-content: flex-end;
+    gap: 0.5rem;
     text-align: center;
 
     div {
         background: var(--shape);
         border-radius: 0.5rem;
         color: var(--text-title);
+        width: 5rem;
+        height: 3rem;
 
 
         strong {
@@ -17,11 +19,6 @@ export const Container = styled.div`
             margin-top: 0.3rem;
             font-size: 1rem;
             font-weight: 500px;
-        }
-        
-        &.highlight-background {
-            background: var(--green);
-            color: #FFF;
         }
     }
 

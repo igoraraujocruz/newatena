@@ -1,6 +1,6 @@
 import { Content } from '../styles'
 import * as FaIcons from 'react-icons/fa';
-import {Navbar} from '../Navebar'
+import Navbar from '../Navebar'
 
 
 

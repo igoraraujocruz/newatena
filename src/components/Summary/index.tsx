@@ -38,6 +38,36 @@ export function Summary({onOpenNewOrderModal}: SummaryProps) {
                 </header>
                 <strong>{orders.filter(order => order?.typeOfHospitalization === 'Cirúrgica').length}</strong>
             </div>
+            <div>
+                <header>
+                    <p>Oncológica</p>
+                </header>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Oncológica').length}</strong>
+            </div>
+            <div>
+                <header>
+                    <p>UTIP</p>
+                </header>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'UTIP').length}</strong>
+            </div>
+            <div>
+                <header>
+                    <p>UTIG</p>
+                </header>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'UTIG').length}</strong>
+            </div>
+            <div>
+                <header>
+                    <p>UCO</p>
+                </header>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'UCO').length}</strong>
+            </div>
+            <div>
+                <header>
+                    <p>Covid</p>
+                </header>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Covid').length}</strong>
+            </div>
 
             {roles.map(role => role.name).includes('doctor_urgency') && <Button type="submit" onClick={onOpenNewOrderModal}>Solicitar Internação <FaIcons.FaHospital/></Button>}
   

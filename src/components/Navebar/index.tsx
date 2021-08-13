@@ -1,12 +1,8 @@
 import Button from '../Button'
-import Input from '../Input'
 import {
   Nav,
-  NavLink,
-  Bars,
   NavMenu,
   NavBtn,
-  NavBtnLink
 } from './styles';
 import { useAuth } from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
@@ -43,9 +39,6 @@ const Navbar = () => {
   return (
     <>
       <Nav>
-        <NavLink to='/'>
-        </NavLink>
-        <Bars />
         <NavMenu>
 
         {roles.map(role => role.name).some(item => urgency.includes(item)) && <Link to="/urgency"><div>
@@ -104,7 +97,6 @@ const Navbar = () => {
         <NavBtn>
           <input name="name" type="text" placeholder="Pesquisar Solicitação"/>
           <Button>Sair</Button>
-          <p className="saudacao">Olá, {user.name}</p>
         </NavBtn>
       </Nav>
     </>

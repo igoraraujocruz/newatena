@@ -74,6 +74,13 @@ export function OrdersProvider({children}: OrdersProviderProps) {
           if (orderIndex >= 0) {
             orders.splice(orderIndex, 1);
             await api.delete(`/orders/${orderId}`)
+
+            await api.post('/orders/history/', {
+              message: `Solicitação excluída por ${user.name}`,
+              order_id: orderId,
+              user_id: user.id
+            })
+
             setOrders([...orders]);
           } else {
             throw Error();
@@ -94,6 +101,13 @@ export function OrdersProvider({children}: OrdersProviderProps) {
         const ordersUpdated = orders.map(order =>
           order.id !== orderUpdated.data.id ? order : orderUpdated.data,
         );
+
+        await api.post('/orders/history/', {
+          message: `Solicitação editada por ${user.name}`,
+          order_id: order.id,
+          user_id: user.id
+        })
+    
   
         setOrders(ordersUpdated);
       } catch (err) {

@@ -1,8 +1,9 @@
 import { Container } from './styles'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Summary } from '../../components/Summary'
 import { Header } from '../../components/Header';
 import { ModalAddOrder } from '../../components/ModalAddOrder';
+import { ModalUploadOrder } from '../../components/ModalUploadOrder';
 import { ModalEditOrder } from '../../components/ModalEditOrder';
 import { ModalDeleteOrder } from '../../components/ModalDeleteOrder';
 import { ModalOrderHistory } from '../../components/ModalOrderHistory';
@@ -35,6 +36,7 @@ export function Urgency() {
     const [isOrderEditModalOpen, setIsOrderEditModalOpen] = useState(false);
     const [isDeleteOrderModalOpen, setIsDeleteOrderModalOpen] = useState(false);
     const [isHistoryOrderModalOpen, setIsHistoryOrderModalOpen] = useState(false);
+    const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [currentOrder, setCurrentOrder] = useState<Order>({} as Order);
 
     function handleOpenNewOrderModal() {
@@ -56,6 +58,11 @@ export function Urgency() {
         setIsHistoryOrderModalOpen(true)
     }
 
+    function handleOpenOrderUploadModal(order: Order) {
+        setCurrentOrder(order)
+        setIsUploadModalOpen(true)
+    }
+
     function handleCloseOrderHistoryModal() {
         setIsHistoryOrderModalOpen(false)
     }
@@ -71,6 +78,10 @@ export function Urgency() {
     function handleCloseOrderDeleteModal() {
         setIsDeleteOrderModalOpen(false)
     }
+
+    function handleCloseOrderUploadModal() {
+        setIsUploadModalOpen(false)
+    }
     
 
     return (
@@ -80,9 +91,10 @@ export function Urgency() {
             <ModalEditOrder isOpen={isOrderEditModalOpen} onRequestClose={handleCloseEditOrderModal} currentOrder={currentOrder}/>
             <ModalDeleteOrder isOpen={isDeleteOrderModalOpen} onRequestClose={handleCloseOrderDeleteModal} currentOrder={currentOrder}/>
             <ModalOrderHistory isOpen={isHistoryOrderModalOpen} onRequestClose={handleCloseOrderHistoryModal} currentOrder={currentOrder}/>
+            <ModalUploadOrder isOpen={isUploadModalOpen} onRequestClose={handleCloseOrderUploadModal} currentOrder={currentOrder}/>
             <Container>
                 <Summary onOpenNewOrderModal={handleOpenNewOrderModal} />
-                <OrdersTable onOpenEditOrderModal={handleOpenOrderEditModal} onOpenDeleteOrderModal={handleOpenOrderDeleteModal} onOpenHistoryOrderModal={handleOpenOrderHistoryModal}/>
+                <OrdersTable onOpenEditOrderModal={handleOpenOrderEditModal} onOpenDeleteOrderModal={handleOpenOrderDeleteModal} onOpenHistoryOrderModal={handleOpenOrderHistoryModal} onOpenUploadOrderModal={handleOpenOrderUploadModal}/>
             </Container>
         </>
     )

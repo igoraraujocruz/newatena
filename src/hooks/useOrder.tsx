@@ -19,11 +19,11 @@ interface Order {
       user_id: string;
       createdAt: string;
     }
-  ]  
+  ];
 }
  
-type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester' | 'orderHistories'>;
-type OrderEdit = Omit<Order, 'createdAt' | 'requester' | 'orderHistories'>;
+type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester' | 'orderHistories' | 'uploads'>;
+type OrderEdit = Omit<Order, 'createdAt' | 'requester' | 'orderHistories' | 'uploads'>;
 
 
 interface OrdersProviderProps {

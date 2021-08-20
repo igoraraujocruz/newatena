@@ -15,7 +15,7 @@ interface Roles {
 
 const Navbar = () => {
 
-  const { user } = useAuth()
+  const { user, signOut } = useAuth()
     const [roles, setRole] = useState<Roles[]>([])
     const urgency = ['superintendent', 'doctor_urgency', 'assistant_urgency', 'analyst_urgency', 'coordinator_urgency', 'manager_urgency']
     const elective = ['superintendent', 'doctor_elective', 'assistant_elective', 'analyst_elective', 'coordinator_elective', 'manager_elective']
@@ -96,7 +96,7 @@ const Navbar = () => {
         </NavMenu>
         <NavBtn>
           <input name="name" type="text" placeholder="Pesquisar Solicitação"/>
-          <Button>Sair</Button>
+          <Button onClick={signOut}>Sair</Button>
         </NavBtn>
       </Nav>
     </>

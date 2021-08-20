@@ -1,7 +1,9 @@
 import { useOrder } from '../../hooks/useOrder';
 import { Container } from './styles';
 import * as EditIcon from 'react-icons/gr';
-import {RiDeleteBin6Line, RiHistoryFill}from 'react-icons/ri';
+import {RiDeleteBin6Line, RiHistoryFill} from 'react-icons/ri';
+import {IoDocumentAttachOutline} from 'react-icons/io5';
+
 
 interface Order {
     id: string,
@@ -27,10 +29,11 @@ interface Order {
 interface OrdersTableProps {
     onOpenEditOrderModal: (order: Order) => void;
     onOpenDeleteOrderModal: (order: Order) => void;
+    onOpenUploadOrderModal: (order: Order) => void;
     onOpenHistoryOrderModal: (order: Order) => void;   
 }
 
-export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpenHistoryOrderModal}: OrdersTableProps) {
+export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpenHistoryOrderModal, onOpenUploadOrderModal}: OrdersTableProps) {
 
     const {orders} = useOrder();
 
@@ -62,6 +65,7 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                             <td>
                             <EditIcon.GrEdit className="btnEdit" type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</EditIcon.GrEdit>
                             <RiHistoryFill size={20} type="submit" onClick={() => onOpenHistoryOrderModal(order)}>Histórico</RiHistoryFill>
+                            <IoDocumentAttachOutline size={20} type="submit" onClick={()=> onOpenUploadOrderModal(order)}>Upload</IoDocumentAttachOutline>
                             <RiDeleteBin6Line size={20} className="deleteBnt" type="submit" onClick={()=> onOpenDeleteOrderModal(order)}>Deletar</RiDeleteBin6Line>
                             </td>
                             

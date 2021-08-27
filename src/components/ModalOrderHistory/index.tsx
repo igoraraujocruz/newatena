@@ -10,7 +10,20 @@ interface Order {
   unimedCard: string;
   typeOfHospitalization: string;
   sex: string;
-  sector: string;
+  room: string;
+  roomRequest: [
+    {
+      id: string;
+      room: string;
+      message: string;
+      isClean: boolean;
+      user_id: string;
+      order_id: string;
+      hotel_management_user_id: string;
+      createdAt: string;
+      updatedAt: string;
+    }
+  ];
   createdAt: string;
   requester: string;
   orderHistories: [
@@ -20,7 +33,7 @@ interface Order {
       user_id: string;
       createdAt: string;
     }
-  ]  
+  ];
 }
 
 interface OrderHistory {
@@ -44,7 +57,7 @@ export function ModalOrderHistory({isOpen, onRequestClose, currentOrder}: ModalO
     useEffect(() => {
         api.get(`/orders/history/${currentOrder.id}`)
         .then(response => setOrdersHistory(response.data))
-    }, [setOrdersHistory, currentOrder]);
+    }, [setOrdersHistory, currentOrder.id]);
 
     return (
         <Modal isOpen={isOpen} 

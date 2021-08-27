@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {shade} from 'polished';
 
 export const Container = styled.div`
     margin-top: 4rem;
@@ -53,15 +54,32 @@ export const Container = styled.div`
             &.UCO {
                 color: var(--red);
             }
-
-            .btnEdit {
-                margin-bottom: 0.3rem;
-                cursor: pointer;
-            }
-
-            .btnDelete {
-                cursor: pointer;
-            }
         }
     }
+`;
+
+export const Buttons = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1.5rem;
+    cursor: pointer;
+    margin-top: 1.1rem;
+    
+
+    .btnEdit {
+                margin-left: 0.5rem;
+            }
+
+            .deleteBnt {
+                margin-left: 0.5rem;
+            }
+
+            .btnHistory {
+                margin-left: 0.5rem;
+            }
+
+            .btnUpload {
+                margin-left: 0.5rem;
+            }
 `;

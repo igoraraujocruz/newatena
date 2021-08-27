@@ -19,7 +19,7 @@ interface ModalAddOrderProps {
 interface OrderFormData {
     name: string
     sector: string
-    sex: string
+    sex: string[]
     typeOfHospitalization: string
     unimedCard: string
     unimedProtocol: string
@@ -28,7 +28,6 @@ interface OrderFormData {
 export function ModalAddOrder({isOpen, onRequestClose}: ModalAddOrderProps) {
     const [typeOfHospitalization, setTypeOfHospitalization] = useState('');
     const [sex, setSex] = useState('');
-    const [sector, setSector] = useState('pronto-socorro');
     const formRef = useRef<FormHandles>(null);
     const { addToast } = useToast();
     const {createOrder} = useOrder();
@@ -48,16 +47,15 @@ export function ModalAddOrder({isOpen, onRequestClose}: ModalAddOrderProps) {
           abortEarly: false,
         })
 
-        await createOrder({
+        createOrder({
           name: data.name,
-          sector: sector,
           sex: sex,
           typeOfHospitalization: typeOfHospitalization,
           unimedCard: data.unimedCard,
           unimedProtocol: data.unimedProtocol,
         })
 
-        addToast({
+       addToast({
           type: 'success',
           title: 'Solicitação criada com sucesso',
         })
@@ -80,7 +78,7 @@ export function ModalAddOrder({isOpen, onRequestClose}: ModalAddOrderProps) {
         })
       }
     },
-    [createOrder, addToast, onRequestClose, typeOfHospitalization, sector, sex],
+    [createOrder, addToast, onRequestClose, typeOfHospitalization, sex],
   );
 
     return (

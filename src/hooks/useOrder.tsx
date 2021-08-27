@@ -9,7 +9,20 @@ interface Order {
   unimedCard: string;
   typeOfHospitalization: string;
   sex: string;
-  sector: string;
+  room: string;
+  roomRequest: [
+    {
+      id: string;
+      room: string;
+      message: string;
+      isClean: boolean;
+      user_id: string;
+      order_id: string;
+      hotel_management_user_id: string;
+      createdAt: string;
+      updatedAt: string;
+    }
+  ];
   createdAt: string;
   requester: string;
   orderHistories: [
@@ -22,8 +35,8 @@ interface Order {
   ];
 }
  
-type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester' | 'orderHistories' | 'uploads'>;
-type OrderEdit = Omit<Order, 'createdAt' | 'requester' | 'orderHistories' | 'uploads'>;
+type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester' | 'orderHistories' | 'uploads' |  'room' | 'roomRequest'>;
+type OrderEdit = Omit<Order, 'createdAt' | 'requester' | 'orderHistories' | 'uploads' | 'room' | 'roomRequest'>;
 
 
 interface OrdersProviderProps {
@@ -46,7 +59,7 @@ export function OrdersProvider({children}: OrdersProviderProps) {
     useEffect(() => {
         api.get('orders')
         .then(response => setOrders(response.data))
-    }, [setOrders]);
+    }, []);
 
     const createOrder = async(orderInput: OrderInput) => {
      const response = await api.post('/orders', {
@@ -114,6 +127,7 @@ export function OrdersProvider({children}: OrdersProviderProps) {
         console.log(err);
       }
     }
+
 
     return (
         <OrdersContext.Provider value={{ orders, createOrder, removeOrder, editOrder }}>

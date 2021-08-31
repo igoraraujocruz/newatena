@@ -1,7 +1,7 @@
 import { useOrder } from '../../hooks/useOrder';
 import { Container, Buttons } from './styles';
 import * as EditIcon from 'react-icons/gr';
-import {RiDeleteBin6Line, RiHistoryFill} from 'react-icons/ri';
+import {RiDeleteBin6Line, RiHistoryFill, RiSendPlaneFill} from 'react-icons/ri';
 import {IoDocumentAttachOutline} from 'react-icons/io5';
 
 
@@ -43,10 +43,11 @@ interface OrdersTableProps {
     onOpenEditOrderModal: (order: Order) => void;
     onOpenDeleteOrderModal: (order: Order) => void;
     onOpenUploadOrderModal: (order: Order) => void;
-    onOpenHistoryOrderModal: (order: Order) => void;   
+    onOpenHistoryOrderModal: (order: Order) => void;
+    onOpenTransferOrderModal: (order: Order) => void;   
 }
 
-export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpenHistoryOrderModal, onOpenUploadOrderModal}: OrdersTableProps) {
+export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpenHistoryOrderModal, onOpenUploadOrderModal, onOpenTransferOrderModal}: OrdersTableProps) {
 
     const {orders} = useOrder();
 
@@ -64,7 +65,7 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                     </tr>
                 </thead>
                 <tbody>
-                    {orders && orders.filter(order => order.room === null).map(order => (
+                    {orders && orders.filter(order => order.room == null).map(order => (
                             <tr key={order.id}>
                             <td>{order.name}</td>
                             <td>{order.unimedProtocol}</td>
@@ -80,6 +81,7 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                                 <RiHistoryFill size={20} className="btnHistory" type="submit" onClick={() => onOpenHistoryOrderModal(order)}>Histórico</RiHistoryFill>
                                 <IoDocumentAttachOutline className="btnUpload" size={20} type="submit" onClick={()=> onOpenUploadOrderModal(order)}>Upload</IoDocumentAttachOutline>
                                 <RiDeleteBin6Line size={20} className="deleteBnt" type="submit" onClick={()=> onOpenDeleteOrderModal(order)}>Deletar</RiDeleteBin6Line>
+                                <RiSendPlaneFill size={20} type="submit" onClick={()=> onOpenTransferOrderModal(order)}>Transferir</RiSendPlaneFill>
                             </Buttons>
                             </tr>
                     ))

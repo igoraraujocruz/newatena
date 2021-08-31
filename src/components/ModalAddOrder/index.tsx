@@ -17,12 +17,12 @@ interface ModalAddOrderProps {
 }
 
 interface OrderFormData {
-    name: string
-    sector: string
-    sex: string[]
-    typeOfHospitalization: string
-    unimedCard: string
-    unimedProtocol: string
+  name: string
+  sector: string
+  sex: string;
+  typeOfHospitalization: string
+  unimedCard: string
+  unimedProtocol: string
 }
 
 export function ModalAddOrder({isOpen, onRequestClose}: ModalAddOrderProps) {

@@ -8,7 +8,7 @@ import { ModalEditOrder } from '../../components/ModalEditOrder';
 import { ModalDeleteOrder } from '../../components/ModalDeleteOrder';
 import { ModalOrderHistory } from '../../components/ModalOrderHistory';
 import { ModalTransferOrder } from '../../components/ModalTransferOrder';
-import { OrdersTable } from '../../components/OrdersTable'
+import { OrdersCM1 } from '../../components/OrdersCM1'
 
 interface Order {
     id: string,
@@ -44,7 +44,7 @@ interface Order {
   }
    
 
-export function Urgency() {
+export function CM1() {
 
     const [isNewOrderModalOpen, setIsNewOrderModalOpen] = useState(false);
     const [isOrderEditModalOpen, setIsOrderEditModalOpen] = useState(false);
@@ -119,7 +119,7 @@ export function Urgency() {
             <ModalTransferOrder isOpen={isTransferModalOpen} onRequestClose={handleCloseTransferOrderModal} currentOrder={currentOrder}/>
             <Container>
                 <Summary onOpenNewOrderModal={handleOpenNewOrderModal} />
-                <OrdersTable onOpenEditOrderModal={handleOpenOrderEditModal} onOpenDeleteOrderModal={handleOpenOrderDeleteModal} onOpenHistoryOrderModal={handleOpenOrderHistoryModal} onOpenUploadOrderModal={handleOpenOrderUploadModal} onOpenTransferOrderModal={handleOpenTransferOrderModal}/>
+                <OrdersCM1 onOpenEditOrderModal={handleOpenOrderEditModal} onOpenDeleteOrderModal={handleOpenOrderDeleteModal} onOpenHistoryOrderModal={handleOpenOrderHistoryModal} onOpenUploadOrderModal={handleOpenOrderUploadModal} onOpenTransferOrderModal={handleOpenTransferOrderModal}/>
             </Container>
         </>
     )

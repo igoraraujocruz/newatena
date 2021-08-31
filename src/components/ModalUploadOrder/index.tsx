@@ -54,11 +54,6 @@ interface UploadOrder {
   createdAt: string;
 }
 
-interface User {
-  name: string;
-}
-
-
 interface ModalUploadOrderProps {
     isOpen: boolean;
     onRequestClose: () => void
@@ -75,24 +70,17 @@ export function ModalUploadOrder({isOpen, onRequestClose, currentOrder}: ModalUp
   const [message, setMessage] = useState('');
   const [uploads, setUpload] = useState<UploadOrder[]>([]);
 
-    useEffect(() => {
-        api.get(`/orders/upload/${currentOrder.id}`)
-        .then(response => setUpload(response.data))
-    }, [currentOrder]);
-
   const handleFile = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
         const file = e.target.files[0];
         setFile(file)
-        console.log(file)
       }
     },
     [],
   );
 
   const handleUpload = useCallback(() => {
-
     try {
       const data = new FormData();
       data.append("file", file)
@@ -107,24 +95,29 @@ export function ModalUploadOrder({isOpen, onRequestClose, currentOrder}: ModalUp
         message: `${user.name} Anexou o arquivo ${name}`,
         order_id: currentOrder.id,
         user_id: user.id
-       })
+      })
 
-       addToast({
+      addToast({
         type: 'success',
         title: 'Arquivo enviado com sucesso',
-      }) 
-
-      onRequestClose()
+      })
+      
     } catch {
       addToast({
         type: 'error',
         title: 'Arquivo não enviado',
       }) 
     }
-      
     },
-    [currentOrder, file, user.id, addToast, onRequestClose, user.name, name, message],
+    [currentOrder, file, user.id, addToast, user.name, name, message],
   );
+
+  useEffect(() => {
+    api.get(`/orders/upload/${currentOrder.id}`)
+    .then(response => setUpload(response.data))
+}, [currentOrder.id]);
+
+  
 
     return (
         <Modal isOpen={isOpen} 

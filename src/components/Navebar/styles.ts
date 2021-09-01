@@ -4,11 +4,9 @@ import styled from 'styled-components';
 export const Nav = styled.nav`
   background: #0F2F4F;
   height: 60px;
-  border-radius: 0 0 5rem 5rem;
   display: flex;
   justify-content: space-between;
   padding: 0.5rem calc((100vw - 1000px) / 2);
-  z-index: 10;
 `;
 
 
@@ -32,6 +30,12 @@ export const NavBtn = styled.nav`
   display: flex;
   align-items: center;
   margin-right: 24px;
+
+  input {
+    width: 20rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+  }
 
   @media screen and (max-width: 768px) {
     display: none;

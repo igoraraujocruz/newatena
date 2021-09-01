@@ -67,7 +67,26 @@ export function OrdersCM1({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpenH
                 </thead>
                 <tbody>
                     
-                {orders.map(order => order.room).some(item => rooms.includes(item)) && <li>Teste</li>}
+                {orders.filter(order => rooms.includes(order.room)).map(order => (
+                            <tr key={order.id}>
+                            <td>{order.name}</td>
+                            <td>{order.unimedProtocol}</td>
+                            <td>{order.unimedCard}</td>
+                            <td className={order.typeOfHospitalization}>{order.typeOfHospitalization}</td>
+                            <td>{order.sex}</td>
+                            <td>{new Intl.DateTimeFormat('pt-BR', {month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', hour12: false}).format(
+                                new Date(order.createdAt)
+                            )}
+                            </td>
+                            <Buttons>
+                                <EditIcon.GrEdit className="btnEdit" type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</EditIcon.GrEdit>
+                                <RiHistoryFill size={20} className="btnHistory" type="submit" onClick={() => onOpenHistoryOrderModal(order)}>Histórico</RiHistoryFill>
+                                <IoDocumentAttachOutline className="btnUpload" size={20} type="submit" onClick={()=> onOpenUploadOrderModal(order)}>Upload</IoDocumentAttachOutline>
+                                <RiDeleteBin6Line size={20} className="deleteBnt" type="submit" onClick={()=> onOpenDeleteOrderModal(order)}>Deletar</RiDeleteBin6Line>
+                                <RiSendPlaneFill size={20} type="submit" onClick={()=> onOpenTransferOrderModal(order)}>Transferir</RiSendPlaneFill>
+                            </Buttons>
+                            </tr>
+                    ))}
                     
                 </tbody>
             </table>

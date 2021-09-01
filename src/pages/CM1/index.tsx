@@ -1,6 +1,5 @@
 import { Container } from './styles'
 import { useState } from 'react';
-import { Summary } from '../../components/Summary'
 import { Header } from '../../components/Header';
 import { ModalAddOrder } from '../../components/ModalAddOrder';
 import { ModalUploadOrder } from '../../components/ModalUploadOrder';
@@ -53,10 +52,6 @@ export function CM1() {
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
     const [currentOrder, setCurrentOrder] = useState<Order>({} as Order);
-
-    function handleOpenNewOrderModal() {
-        setIsNewOrderModalOpen(true)
-    }
 
     function handleOpenOrderEditModal(order: Order) {
         setCurrentOrder(order)
@@ -118,7 +113,6 @@ export function CM1() {
             <ModalUploadOrder isOpen={isUploadModalOpen} onRequestClose={handleCloseOrderUploadModal} currentOrder={currentOrder}/>
             <ModalTransferOrder isOpen={isTransferModalOpen} onRequestClose={handleCloseTransferOrderModal} currentOrder={currentOrder}/>
             <Container>
-                <Summary onOpenNewOrderModal={handleOpenNewOrderModal} />
                 <OrdersCM1 onOpenEditOrderModal={handleOpenOrderEditModal} onOpenDeleteOrderModal={handleOpenOrderDeleteModal} onOpenHistoryOrderModal={handleOpenOrderHistoryModal} onOpenUploadOrderModal={handleOpenOrderUploadModal} onOpenTransferOrderModal={handleOpenTransferOrderModal}/>
             </Container>
         </>

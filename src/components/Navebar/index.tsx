@@ -8,6 +8,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {api} from '../../services/api';
+import Input from '../Input';
 
 interface Roles {
   name: string;
@@ -95,7 +96,6 @@ const Navbar = () => {
           
         </NavMenu>
         <NavBtn>
-          <input name="name" type="text" placeholder="Pesquisar Solicitação"/>
           <Button onClick={signOut}>Sair</Button>
         </NavBtn>
       </Nav>

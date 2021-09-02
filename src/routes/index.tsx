@@ -11,7 +11,7 @@ export function Routes() {
             <Route path="/signin" component={SignIn} />
             <Route path="/urgency" component={Urgency} isPrivate />
             <Route path="/cm1" component={CM1} isPrivate />
-            <Route path="/painel" component={Painel} isPrivate />
+            <Route path="/" component={Painel} isPrivate />
         </Switch>
     )
 }

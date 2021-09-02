@@ -13,7 +13,7 @@ export function Painel() {
     const { user } = useAuth()
     const [roles, setRole] = useState<Roles[]>([])
     const urgency = ['superintendent', 'doctor_urgency', 'assistant_urgency', 'analyst_urgency', 'coordinator_urgency', 'manager_urgency']
-    const elective = ['superintendent', 'doctor_elective', 'assistant_elective', 'analyst_elective', 'coordinator_elective', 'manager_elective']
+    const elective = ['doctor_elective', 'assistant_elective']
     const utip = ['superintendent', 'doctor_utip', 'assistant_utip', 'analyst_utip', 'coordinator_utip', 'manager_utip']
     const utic = ['superintendent', 'doctor_utic', 'assistant_utic', 'analyst_utic', 'coordinator_utic', 'manager_utic']
     const utig = ['superintendent', 'doctor_utig', 'assistant_utig', 'analyst_utig', 'coordinator_utig', 'manager_utig']

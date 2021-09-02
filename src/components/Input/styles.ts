@@ -26,7 +26,7 @@ export const Container = styled.div<ContainerProps>`
 			color: #0F2F4F;
 		`}
 		${props => props.isFilled && css`
-			color: #1C6A33;
+			color: #0F2F4F;
 		`}
 	input {
 		flex: 1;

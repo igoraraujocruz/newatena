@@ -16,7 +16,7 @@ export const Route: React.FC<RouteProps> = ({ isPrivate = false, component: Comp
             return isPrivate === !!user ? (
                 <Component />
             ) : (
-                <Redirect to={{ pathname: isPrivate ? '/signin' : '/painel', state: { from: location }}} />
+                <Redirect to={{ pathname: isPrivate ? '/signin' : '/', state: { from: location }}} />
             );
         }}
         />

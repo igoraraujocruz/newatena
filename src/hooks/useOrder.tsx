@@ -27,7 +27,7 @@ export function OrdersProvider({children}: OrdersProviderProps) {
     const { user } = useAuth()
     const [orders, setOrders] = useState<Order[]>([]);
 
-    useEffect(() => {
+    const getOrders = useEffect(() => {
         api.get('orders')
         .then(response => setOrders(response.data))
     }, []);

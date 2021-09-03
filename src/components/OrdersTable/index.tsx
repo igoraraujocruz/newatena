@@ -30,7 +30,7 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                         <th>Sexo</th>
                         <th>Data</th>
                         <th>Reg. Leitos</th>
-                        <th>Rouparia</th>
+                        <th>Hotelaria</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +45,8 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                                 new Date(order.createdAt)
                             )}
                             </td>
+                            <td>{order.roomRequest == null ? <p>Aguardando direcionamento...</p> : <p>{order.roomRequest.room}</p>}</td>
+                            <td>{order.roomRequest?.isClean ? <p>Quarto liberado!</p> : <p>Aguardando liberação da hotelaria...</p>}</td>
                             <Buttons>
                                 <EditIcon.GrEdit className="btnEdit" type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</EditIcon.GrEdit>
                                 <RiHistoryFill size={20} className="btnHistory" type="submit" onClick={() => onOpenHistoryOrderModal(order)}>Histórico</RiHistoryFill>

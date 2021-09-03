@@ -14,10 +14,7 @@ export const Nav = styled.nav`
   @media (max-width: 867px) {
     display: none;
   }
-
 `;
-
-
 
 export const NavMenu = styled.div`
   display: block;
@@ -45,10 +42,16 @@ export const NavMenu = styled.div`
     margin-top: 1.5rem;
     color: white;
     transition: all 0.2s ease-in-out;
+    padding: 1rem;
     &:hover {
     transition: all 0.2s ease-in-out;
-    background: #fff;
+    border-color: #A4A4A4;
+    background: #f0f2f5;
+    padding: 2rem;
+    border-style: solid;
+    border-width: 0.2rem 0 0.2rem 0.5rem;
     color: #010606;
+    border-radius: 1rem 0 0 1rem;
     }  
   }
 

@@ -6,7 +6,7 @@ import {Order} from '../interfaces/Order'
  
 type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester' | 'orderHistories' | 'uploads' |  'room' | 'roomRequest'>;
 type OrderEdit = Omit<Order, 'createdAt' | 'requester' | 'orderHistories' | 'uploads' | 'room' | 'roomRequest'>;
-type TransferOrderInput = Pick<Order, 'id' | 'room'>;
+type TransferOrderInput = Pick<Order, 'id'>;
 
 
 interface OrdersProviderProps {
@@ -27,7 +27,7 @@ export function OrdersProvider({children}: OrdersProviderProps) {
     const { user } = useAuth()
     const [orders, setOrders] = useState<Order[]>([]);
 
-    const getOrders = useEffect(() => {
+    useEffect(() => {
         api.get('orders')
         .then(response => setOrders(response.data))
     }, []);
@@ -100,7 +100,6 @@ export function OrdersProvider({children}: OrdersProviderProps) {
     }
 
     const transferOrder = async (order: TransferOrderInput) => {
-      console.log(order.room)
       try {
         const orderUpdated = await api.patch(
           `/orders/${order.id}`, { ...order },

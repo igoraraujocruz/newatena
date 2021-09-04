@@ -6,7 +6,7 @@ import { FormHandles } from '@unform/core';
 import { useRef, useCallback, useState } from 'react';
 import { useToast } from '../../hooks/useToast';
 import Button from '../Button';
-import { RadioBox, ButtonConfirm, Container } from './styles';
+import { ButtonConfirm, Container } from './styles';
 import {Order} from '../../interfaces/Order'
 
 
@@ -18,20 +18,16 @@ interface ModalTransferOrderProps {
 
 export function ModalTransferOrder({isOpen, onRequestClose, currentOrder}: ModalTransferOrderProps) {
     const formRef = useRef<FormHandles>(null);
-    const [room, setRoom] = useState('');
     const { addToast } = useToast();
     const {transferOrder} = useOrder();
 
 
    const handleTransferOrder = useCallback(
     async () => {
-
       try {
         formRef.current?.setErrors({});
-
         await transferOrder({
           id: currentOrder.id,
-          room: room,
         })
 
        addToast({
@@ -40,7 +36,6 @@ export function ModalTransferOrder({isOpen, onRequestClose, currentOrder}: Modal
         })
       
         onRequestClose();
-        setRoom('');
         
       } catch (error) {
         
@@ -51,7 +46,7 @@ export function ModalTransferOrder({isOpen, onRequestClose, currentOrder}: Modal
         })
       }
     },
-    [transferOrder, addToast, onRequestClose, currentOrder, room],
+    [transferOrder, addToast, onRequestClose, currentOrder],
   );
 
     return (
@@ -65,30 +60,6 @@ export function ModalTransferOrder({isOpen, onRequestClose, currentOrder}: Modal
         </button>    
             <Container>
             <Form ref={formRef} onSubmit={handleTransferOrder}>   
-            <RadioBox 
-                    type="button"
-                    onClick={() => setRoom('101')}
-                    isActive={room === '101'}
-                    activeColor="blue"
-                    >
-                        <span>101</span>
-            </RadioBox>
-            <RadioBox 
-                    type="button"
-                    onClick={() => setRoom('102')}
-                    isActive={room === '102'}
-                    activeColor="blue"
-                    >
-                        <span>102</span>
-            </RadioBox>
-            <RadioBox 
-                    type="button"
-                    onClick={() => setRoom('103')}
-                    isActive={room === '103'}
-                    activeColor="blue"
-                    >
-                        <span>103</span>
-            </RadioBox>
                 <ButtonConfirm>
                   <Button type="submit">Transferir</Button>
                 </ButtonConfirm>

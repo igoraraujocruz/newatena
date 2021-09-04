@@ -14,9 +14,10 @@ interface OrdersTableProps {
     onOpenTransferOrderModal: (order: Order) => void;   
 }
 
-export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpenHistoryOrderModal, onOpenUploadOrderModal, onOpenTransferOrderModal}: OrdersTableProps) {
+export function OrdersCM1({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpenHistoryOrderModal, onOpenUploadOrderModal, onOpenTransferOrderModal}: OrdersTableProps) {
 
     const {orders} = useOrder();
+    const rooms = ['101', '102', '103']
 
     return (
         <Container>
@@ -29,12 +30,11 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                         <th>Tipo de Internação</th>
                         <th>Sexo</th>
                         <th>Data</th>
-                        <th>Reg. Leitos</th>
-                        <th>Hotelaria</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {orders ? orders.filter(order => order.room == null).map(order => (
+                    
+                {orders.filter(order => rooms.includes(order.room)).map(order => (
                             <tr key={order.id}>
                             <td>{order.name}</td>
                             <td>{order.unimedProtocol}</td>
@@ -45,8 +45,6 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                                 new Date(order.createdAt)
                             )}
                             </td>
-                            <td>{order.roomRequest == null ? <p>Aguardando direcionamento...</p> : <p>{order.roomRequest.room}</p>}</td>
-                            <td>{order.roomRequest?.isClean ? <p>Quarto liberado!</p> : <p>Aguardando liberação da hotelaria...</p>}</td>
                             <Buttons>
                                 <EditIcon.GrEdit className="btnEdit" type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</EditIcon.GrEdit>
                                 <RiHistoryFill size={20} className="btnHistory" type="submit" onClick={() => onOpenHistoryOrderModal(order)}>Histórico</RiHistoryFill>
@@ -55,9 +53,7 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                                 <RiSendPlaneFill size={20} type="submit" onClick={()=> onOpenTransferOrderModal(order)}>Transferir</RiSendPlaneFill>
                             </Buttons>
                             </tr>
-                    ))
-                    : <p>Carregando...</p>
-                    }
+                    ))}
                     
                 </tbody>
             </table>

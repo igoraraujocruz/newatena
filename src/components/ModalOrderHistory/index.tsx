@@ -2,26 +2,7 @@ import Modal from 'react-modal';
 import closeImg from '../../assets/close.svg';
 import { useState, useEffect } from 'react';
 import { api } from '../../services/api';
-
-interface Order {
-  id: string,
-  name: string;
-  unimedProtocol: string;
-  unimedCard: string;
-  typeOfHospitalization: string;
-  sex: string;
-  sector: string;
-  createdAt: string;
-  requester: string;
-  orderHistories: [
-    {
-      id: string;
-      message: string;
-      user_id: string;
-      createdAt: string;
-    }
-  ]  
-}
+import {Order} from '../../interfaces/Order'
 
 interface OrderHistory {
   id: string,
@@ -44,7 +25,7 @@ export function ModalOrderHistory({isOpen, onRequestClose, currentOrder}: ModalO
     useEffect(() => {
         api.get(`/orders/history/${currentOrder.id}`)
         .then(response => setOrdersHistory(response.data))
-    }, [setOrdersHistory, currentOrder]);
+    }, [setOrdersHistory, currentOrder.id]);
 
     return (
         <Modal isOpen={isOpen} 

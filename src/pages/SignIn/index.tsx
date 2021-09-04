@@ -43,7 +43,7 @@ export const SignIn: React.FC = () => {
           password: data.password,
         });
 
-        history.push('/painel');
+        history.push('/');
       
       } catch (err) {
           if (err instanceof Yup.ValidationError) {

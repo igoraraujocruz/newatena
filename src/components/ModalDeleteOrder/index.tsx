@@ -9,16 +9,7 @@ import * as Yup from 'yup';
 import Button from '../Button';
 import { useOrder } from '../../hooks/useOrder';
 import { Container, Buttons } from './styles'
-
-interface Order {
-  id: string;
-  name: string
-  sector: string
-  sex: string
-  typeOfHospitalization: string
-  unimedCard: string
-  unimedProtocol: string
-}
+import {Order} from '../../interfaces/Order'
 
 type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester'>;
 

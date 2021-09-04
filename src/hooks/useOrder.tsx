@@ -1,29 +1,12 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
+import {Order} from '../interfaces/Order'
 
-interface Order {
-  id: string,
-  name: string;
-  unimedProtocol: string;
-  unimedCard: string;
-  typeOfHospitalization: string;
-  sex: string;
-  sector: string;
-  createdAt: string;
-  requester: string;
-  orderHistories: [
-    {
-      id: string;
-      message: string;
-      user_id: string;
-      createdAt: string;
-    }
-  ];
-}
  
-type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester' | 'orderHistories' | 'uploads'>;
-type OrderEdit = Omit<Order, 'createdAt' | 'requester' | 'orderHistories' | 'uploads'>;
+type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester' | 'orderHistories' | 'uploads' |  'room' | 'roomRequest'>;
+type OrderEdit = Omit<Order, 'createdAt' | 'requester' | 'orderHistories' | 'uploads' | 'room' | 'roomRequest'>;
+type TransferOrderInput = Pick<Order, 'id' | 'room'>;
 
 
 interface OrdersProviderProps {
@@ -33,6 +16,7 @@ interface OrdersProviderProps {
 interface OrdersContextData {
     orders: Order[];
     createOrder: (order: OrderInput) => Promise<void>;
+    transferOrder: (order: TransferOrderInput) => Promise<void>;
     removeOrder: (orderId: string) => void;
     editOrder: (order: OrderEdit) => Promise<void>;
 }
@@ -43,10 +27,10 @@ export function OrdersProvider({children}: OrdersProviderProps) {
     const { user } = useAuth()
     const [orders, setOrders] = useState<Order[]>([]);
 
-    useEffect(() => {
+    const getOrders = useEffect(() => {
         api.get('orders')
         .then(response => setOrders(response.data))
-    }, [setOrders]);
+    }, []);
 
     const createOrder = async(orderInput: OrderInput) => {
      const response = await api.post('/orders', {
@@ -115,8 +99,33 @@ export function OrdersProvider({children}: OrdersProviderProps) {
       }
     }
 
+    const transferOrder = async (order: TransferOrderInput) => {
+      console.log(order.room)
+      try {
+        const orderUpdated = await api.patch(
+          `/orders/${order.id}`, { ...order },
+        );
+  
+        const ordersUpdated = orders.map(order =>
+          order.id !== orderUpdated.data.id ? order : orderUpdated.data,
+        );
+
+        await api.post('/orders/history/', {
+          message: `Solicitação editada por ${user.name}`,
+          order_id: order.id,
+          user_id: user.id
+        })
+    
+  
+        setOrders(ordersUpdated);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+
     return (
-        <OrdersContext.Provider value={{ orders, createOrder, removeOrder, editOrder }}>
+        <OrdersContext.Provider value={{ orders, createOrder, removeOrder, editOrder, transferOrder }}>
             {children}
         </OrdersContext.Provider>
     );

@@ -109,8 +109,12 @@ export function OrdersProvider({children}: OrdersProviderProps) {
           order.id !== orderUpdated.data.id ? order : orderUpdated.data,
         );
 
+        const getRoom = await api.get(`/orders/${order.id}`)
+
+        const room = getRoom.data.room;
+
         await api.post('/orders/history/', {
-          message: `Solicitação editada por ${user.name}`,
+          message: `Prontuário transferido para ${room} por ${user.name}`,
           order_id: order.id,
           user_id: user.id
         })

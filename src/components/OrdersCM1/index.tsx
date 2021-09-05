@@ -17,7 +17,7 @@ interface OrdersTableProps {
 export function OrdersCM1({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpenHistoryOrderModal, onOpenUploadOrderModal, onOpenTransferOrderModal}: OrdersTableProps) {
 
     const {orders} = useOrder();
-    const rooms = ['101', '102', '103']
+    const rooms = ['101', '102', '103', '104', '105', '106', '107', '108']
 
     return (
         <Container>

@@ -28,7 +28,7 @@ export function RoomProvider({children}: RoomProviderProps) {
      const roomResponse = response.data;
 
      await api.post('/orders/history/', {
-      message: `Quarto Solitado por ${user.name}`,
+      message: `Quarto ${roomInput.room} Solitado por ${user.name}`,
       order_id: roomResponse.order_id,
       user_id: user.id
      })

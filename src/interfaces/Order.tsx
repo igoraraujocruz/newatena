@@ -6,7 +6,7 @@ export interface Order {
     typeOfHospitalization: string;
     sex: string;
     room: string;
-    roomRequest: 
+    roomRequest:[ 
       {
         id: string;
         room: string;
@@ -17,7 +17,7 @@ export interface Order {
         hotel_management_user_id: string;
         createdAt: string;
         updatedAt: string;
-      }
+      }]
     createdAt: string;
     requester: string;
     orderHistories: [

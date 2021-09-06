@@ -11,7 +11,7 @@ export const Nav = styled.nav`
   box-sizing: border-box;
   font-family: "Poppins" , sans-serif;
 
-  @media (max-width: 867px) {
+  @media (max-width: 1411px) {
     display: none;
   }
 `;
@@ -67,7 +67,7 @@ export const NavBtn = styled.nav`
     border-radius: 0.5rem;
   }
 
-  @media screen and (max-width: 768px) {
+  @media (max-width: 1280px) {
     display: none;
   }
 `;

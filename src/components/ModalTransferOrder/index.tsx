@@ -108,6 +108,8 @@ export function ModalTransferOrder({isOpen, onRequestClose, currentOrder}: Modal
     },
     [addToast, currentOrder, createRoomRequest, onRequestClose],
   );
+  
+
 
     return (
         <Modal isOpen={isOpen} 
@@ -120,7 +122,7 @@ export function ModalTransferOrder({isOpen, onRequestClose, currentOrder}: Modal
         </button>    
             <Container>
             {roles.map(role => role.name).includes('assistant_urgency' || 'analyst_urgency') && 
-              <Form ref={formRef} onSubmit={handleRequestRoom} initialData={currentOrder.roomRequest}>   
+              <Form ref={formRef} onSubmit={handleRequestRoom}>   
                   <h2>Pedido de Quarto</h2>
                   
                   <Input name="room" type="text" placeholder="Quarto" />

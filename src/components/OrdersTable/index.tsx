@@ -1,6 +1,6 @@
 import { useOrder } from '../../hooks/useOrder';
 import { Container, Buttons } from './styles';
-import * as EditIcon from 'react-icons/gr';
+import {GrEdit} from 'react-icons/gr';
 import {RiDeleteBin6Line, RiHistoryFill, RiSendPlaneFill} from 'react-icons/ri';
 import {IoDocumentAttachOutline} from 'react-icons/io5';
 import {Order} from '../../interfaces/Order'
@@ -36,19 +36,19 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                 <tbody>
                     {orders ? orders.filter(order => order.room == null).map(order => (
                             <tr key={order.id}>
-                            <td>{order.name}</td>
-                            <td>{order.unimedProtocol}</td>
-                            <td>{order.unimedCard}</td>
-                            <td className={order.typeOfHospitalization}>{order.typeOfHospitalization}</td>
-                            <td>{order.sex}</td>
-                            <td>{new Intl.DateTimeFormat('pt-BR', {month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', hour12: false}).format(
+                            <td data-title="Nome">{order.name}</td>
+                            <td data-title="Atendimento">{order.unimedProtocol}</td>
+                            <td data-title="Cartão Unimed">{order.unimedCard}</td>
+                            <td data-title="Tipo de Internação" className={order.typeOfHospitalization}>{order.typeOfHospitalization}</td>
+                            <td data-title="Sexo">{order.sex}</td>
+                            <td data-title="Data">{new Intl.DateTimeFormat('pt-BR', {month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', hour12: false}).format(
                                 new Date(order.createdAt)
                             )}
                             </td>
-                            <td>{order.roomRequest == null ? <p>Aguardando direcionamento...</p> : <p>{order.roomRequest.map(req => req.room).slice(-1)}</p>}</td>
-                            <td>{order.roomRequest && order.roomRequest.map(req => req.isClean).slice(-1).some(clean => clean === true) ? <p>Quarto liberado!</p> : <p>Aguardando liberação da hotelaria...</p>}</td>
+                            <td data-title="Reg. de Leitos">{order.roomRequest == null ? <p>Aguardando direcionamento...</p> : <p>{order.roomRequest.map(req => req.room).slice(-1)}</p>}</td>
+                            <td data-title="Hotelaria">{order.roomRequest && order.roomRequest.map(req => req.isClean).slice(-1).some(clean => clean === true) ? <p>Quarto liberado!</p> : <p>Aguardando liberação da hotelaria...</p>}</td>
                             <Buttons>
-                                <EditIcon.GrEdit className="btnEdit" type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</EditIcon.GrEdit>
+                                <GrEdit size={20} className="btnEdit" type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</GrEdit>
                                 <RiHistoryFill size={20} className="btnHistory" type="submit" onClick={() => onOpenHistoryOrderModal(order)}>Histórico</RiHistoryFill>
                                 <IoDocumentAttachOutline className="btnUpload" size={20} type="submit" onClick={()=> onOpenUploadOrderModal(order)}>Upload</IoDocumentAttachOutline>
                                 <RiDeleteBin6Line size={20} className="deleteBnt" type="submit" onClick={()=> onOpenDeleteOrderModal(order)}>Deletar</RiDeleteBin6Line>

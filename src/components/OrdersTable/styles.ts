@@ -2,39 +2,37 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     margin-top: 4rem;
+    display: flex;
+    margin: auto;
+    
 
-    @media (max-width: 1500px) {
-        table {
-                color: red;
+    @media screen and (max-width: 800px) {
+            thead {
                 display: none;
             }
 
-            table, th, td, tr {
-                color: red;
+            tr {
                 display: block;
-                width: 100%;
+                background-color: #0F2F4F;
+                margin-bottom: 3rem;
             }
 
-            tr {
-                margin-bottom: 15px;
-            }
 
             td {
+                display: block;
                 text-align: right;
                 padding-left: 50%;
-                text-align: right;
                 position: relative;
             }
 
             td::before {
-                content: attr(data-label);
+                content: attr(data-title);
                 position: absolute;
-                left: 0;
-                width: 50%;
-                padding-left: 15px;
-                font-size: 15px;
+                left: 15px;
+                font-weight: 600;
+                font-size: 1rem;
             }
-        }
+    }
     
     table {
         width: 100%;
@@ -46,6 +44,7 @@ export const Container = styled.div`
             padding: 1rem 2rem;
             text-align: left;
             line-height: 1.5rem;
+
         }
 
         td {
@@ -53,7 +52,6 @@ export const Container = styled.div`
             border: 0;
             background: var(--shape);
             color: var(--text-body);
-            border-radius: 0.25rem;
 
             &:first-child {
                 color: var(--text-body);
@@ -92,16 +90,14 @@ export const Container = styled.div`
 
 export const Buttons = styled.div`
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin-left: 1.5rem;
     cursor: pointer;
-    margin-top: 1.1rem;
-    
+    padding: 1rem;
+    color: white;
 
     .btnEdit {
-                margin-left: 0.5rem;
-            }
+        margin-left: 0.5rem;
+    }
 
     .deleteBnt {
         margin-left: 0.5rem;

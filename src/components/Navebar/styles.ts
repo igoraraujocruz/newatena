@@ -11,7 +11,7 @@ export const Nav = styled.nav`
   box-sizing: border-box;
   font-family: "Poppins" , sans-serif;
 
-  @media (max-width: 1411px) {
+  @media (max-width: 1100px) {
     display: none;
   }
 `;

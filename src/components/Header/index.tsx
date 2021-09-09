@@ -1,6 +1,4 @@
-import SideBar from '../Navebar'
-
-
+import SideBar from '../Sidebar'
 
 export function Header() {
 

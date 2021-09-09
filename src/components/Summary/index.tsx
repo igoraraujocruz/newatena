@@ -21,7 +21,7 @@ export function Summary({onOpenNewOrderModal}: SummaryProps) {
     useEffect(() => {
         api.get(`users/${user.id}`)
         .then(response => setRole(response.data.roles))
-    }, []);
+    }, [user.id]);
 
     const { orders } = useOrder();
     return (
@@ -30,43 +30,43 @@ export function Summary({onOpenNewOrderModal}: SummaryProps) {
                 <header>
                     <p>Clínicas</p>
                 </header>
-                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Clínica').length}</strong>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Clínica' && order.room === null).length}</strong>
             </div>
             <div>
                 <header>
                     <p>Cirúrgicas</p>
                 </header>
-                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Cirúrgica').length}</strong>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Cirúrgica' && order.room === null ).length}</strong>
             </div>
             <div>
                 <header>
                     <p>Oncológica</p>
                 </header>
-                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Oncológica').length}</strong>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Oncológica' && order.room === null).length}</strong>
             </div>
             <div>
                 <header>
                     <p>UTIP</p>
                 </header>
-                <strong>{orders.filter(order => order?.typeOfHospitalization === 'UTIP').length}</strong>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'UTIP' && order.room === null).length}</strong>
             </div>
             <div>
                 <header>
                     <p>UTIG</p>
                 </header>
-                <strong>{orders.filter(order => order?.typeOfHospitalization === 'UTIG').length}</strong>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'UTIG' && order.room === null).length}</strong>
             </div>
             <div>
                 <header>
                     <p>UCO</p>
                 </header>
-                <strong>{orders.filter(order => order?.typeOfHospitalization === 'UCO').length}</strong>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'UCO' && order.room === null).length}</strong>
             </div>
             <div>
                 <header>
                     <p>Covid</p>
                 </header>
-                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Covid').length}</strong>
+                <strong>{orders.filter(order => order?.typeOfHospitalization === 'Covid' && order.room === null).length}</strong>
             </div>
 
             {roles.map(role => role.name).includes('doctor_urgency') && <Button type="submit" onClick={onOpenNewOrderModal}>Solicitar Internação <FaIcons.FaHospital/></Button>}

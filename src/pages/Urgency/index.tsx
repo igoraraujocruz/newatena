@@ -86,6 +86,7 @@ export function Urgency() {
             <ModalTransferOrder isOpen={isTransferModalOpen} onRequestClose={handleCloseTransferOrderModal} currentOrder={currentOrder}/>
             <Container>
                 <Summary onOpenNewOrderModal={handleOpenNewOrderModal} />
+                
                 <OrdersTable onOpenEditOrderModal={handleOpenOrderEditModal} onOpenDeleteOrderModal={handleOpenOrderDeleteModal} onOpenHistoryOrderModal={handleOpenOrderHistoryModal} onOpenUploadOrderModal={handleOpenOrderUploadModal} onOpenTransferOrderModal={handleOpenTransferOrderModal}/>
             </Container>
         </>

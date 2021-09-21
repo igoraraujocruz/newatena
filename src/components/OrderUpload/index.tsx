@@ -1,6 +1,4 @@
-import Modal from 'react-modal';
-import closeImg from '../../assets/close.svg'
-import { Form } from '@unform/web';
+import { Form } from './styles';
 import { ChangeEvent, useCallback, useState, useRef, useEffect } from 'react';
 import { useToast } from '../../hooks/useToast';
 import Button from '../Button';
@@ -8,8 +6,8 @@ import { useAuth } from '../../hooks/useAuth';
 import {api} from '../../services/api'
 import { FormHandles } from '@unform/core';
 import Input from '../Input';
-import { UploadFiles, Container, Inputs } from './styles'
-import {Order} from '../../interfaces/Order'
+import {Order} from '../../interfaces/Order';
+import { useHistory } from '../../hooks/useHistory';
 
 
 interface UploadOrder {
@@ -24,13 +22,12 @@ interface UploadOrder {
 }
 
 interface ModalUploadOrderProps {
-    isOpen: boolean;
-    onRequestClose: () => void
-    currentOrder: Order;
+  currentOrder: Order;
 }
 
 
-export function ModalUploadOrder({isOpen, onRequestClose, currentOrder}: ModalUploadOrderProps) {
+export function OrderUpload({currentOrder}: ModalUploadOrderProps) {
+  const { createHistory } = useHistory()
   const { user } = useAuth()
   const { addToast } = useToast();
   const formRef = useRef<FormHandles>(null);
@@ -38,6 +35,11 @@ export function ModalUploadOrder({isOpen, onRequestClose, currentOrder}: ModalUp
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [uploads, setUpload] = useState<UploadOrder[]>([]);
+
+  useEffect(() => {
+    api.get(`/orders/upload/${currentOrder.id}`)
+    .then(response => setUpload(response.data))
+}, [currentOrder.id]);
 
   const handleFile = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +51,7 @@ export function ModalUploadOrder({isOpen, onRequestClose, currentOrder}: ModalUp
     [],
   );
 
-  const handleUpload = useCallback(() => {
+  const handleUpload = useCallback(async () => {
     try {
       const data = new FormData();
       data.append("file", file)
@@ -58,10 +60,10 @@ export function ModalUploadOrder({isOpen, onRequestClose, currentOrder}: ModalUp
       data.append("order_id", currentOrder.id)
       data.append("user_id", user.id)
 
-      api.post('/orders/upload/', data)
+      await api.post('/orders/upload/', data)
 
-      api.post('/orders/history/', {
-        message: `${user.name} Anexou o arquivo ${name}`,
+      await createHistory({
+        message: `${user.name} anexou o arquivo ${name}`,
         order_id: currentOrder.id,
         user_id: user.id
       })
@@ -78,49 +80,31 @@ export function ModalUploadOrder({isOpen, onRequestClose, currentOrder}: ModalUp
       }) 
     }
     },
-    [currentOrder, file, user.id, addToast, user.name, name, message],
+    [currentOrder, file, user.id, addToast, user.name, name, message, createHistory],
   );
-
-  useEffect(() => {
-    api.get(`/orders/upload/${currentOrder.id}`)
-    .then(response => setUpload(response.data))
-}, [currentOrder.id]);
 
   
 
     return (
-        <Modal isOpen={isOpen} 
-        onRequestClose={onRequestClose}
-        overlayClassName="react-modal-overlay"
-        className="react-modal-content"
-        >
-        <button type="button" className="react-modal-close">
-            <img src={closeImg} alt="Fechar modal" onClick={onRequestClose} />
-        </button>
-
-        <p>Arquivos anexados:</p>
-        
-        <UploadFiles>
-          {uploads.length === 0 && <p>Nenhum documento anexado até o momento...</p>}
-          {uploads.map(upload => <a href={upload.url} key={upload.id} target="blank">{upload.name}</a>)}
-        </UploadFiles>
-        
         <Form ref={formRef} onSubmit={handleUpload}>
-        <Container>
-        <Inputs>     
-            <Input
-            name="name"
-            type='text'
-            id='name'
-            placeholder="Insira um nome para o arquivo que deseja enviar"
-            onChange={event => setName(event.target.value)}
-            />          
+            <span>Arquivos anexados:</span>
+            {uploads.length === 0 && <p>Nenhum documento anexado até o momento...</p>}
+            {uploads.map(upload => <a href={upload.url} key={upload.id} target="blank">{upload.name}</a>)}
             <input
-            type='file'
-            id='document'
-            onChange={handleFile}
-          />
-          </Inputs>
+              type='file'
+              id='document'
+              onChange={handleFile}
+            />
+            <section>
+              <Input
+              className="nameDocument"
+              name="name"
+              type='text'
+              id='name'
+              placeholder="Insira um nome para o arquivo que deseja enviar"
+              onChange={event => setName(event.target.value)}
+              />
+            </section>            
           <textarea
             name="message"
             id='message'
@@ -128,10 +112,7 @@ export function ModalUploadOrder({isOpen, onRequestClose, currentOrder}: ModalUp
             onChange={event => setMessage(event.target.value)}
             />
             <Button type="submit">Enviar Arquivo</Button>
-            </Container>
         </Form>
-        
-        </Modal>
     )
 }
 

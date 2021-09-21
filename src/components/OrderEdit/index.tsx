@@ -1,8 +1,5 @@
-import Modal from 'react-modal';
-import closeImg from '../../assets/close.svg'
-import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import { useRef, useCallback, useState, useEffect } from 'react';
+import { useRef, useCallback} from 'react';
 import { useToast } from '../../hooks/useToast';
 import getValidationErrors from '../../utils/getValidationErrors';
 import * as Yup from 'yup';
@@ -10,16 +7,15 @@ import Input from '../Input';
 import Button from '../Button';
 import { useOrder } from '../../hooks/useOrder';
 import {Order} from '../../interfaces/Order'
+import {  Form } from './styles'
 
 type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester' | 'room' | 'roomRequest'>;
 
-interface ModalEditOrderProps {
-    isOpen: boolean;
-    onRequestClose: () => void
+interface OrderEditProps {
     currentOrder: Order;
 }
 
-export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEditOrderProps) {
+export function OrderEdit({currentOrder}: OrderEditProps) {
 
   const formRef = useRef<FormHandles>(null);
 
@@ -51,8 +47,6 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
           unimedCard: data.unimedCard,
           unimedProtocol: data.unimedProtocol,
         })
-
-        onRequestClose();
         
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
@@ -67,31 +61,22 @@ export function ModalEditOrder({isOpen, onRequestClose, currentOrder}: ModalEdit
         })
       }
     },
-    [addToast, editOrder, onRequestClose, currentOrder],
+    [addToast, editOrder, currentOrder],
   );
 
   
 
     return (
-        <Modal isOpen={isOpen} 
-        onRequestClose={onRequestClose}
-        overlayClassName="react-modal-overlay"
-        className="react-modal-content"
-        >
-        <button type="button" className="react-modal-close">
-            <img src={closeImg} alt="Fechar modal" onClick={onRequestClose} />
-        </button>    
-            
-            <Form ref={formRef} onSubmit={handleEditOrder} initialData={currentOrder}>   
-                <h2>Editar Internação</h2>
-                
-                <Input name="name" type="text" placeholder="Nome do Paciente" />
-                <Input name="unimedCard" type="text" placeholder="Cartão Unimed"/>
-                <Input name="unimedProtocol" type="text" placeholder="Atendimento"/>
-                <Input name="typeOfHospitalization" type="text" placeholder="Tipo de Internação"/>   
-                <Input name="sex" type="text" placeholder="sexo"/>  
+            <Form ref={formRef} onSubmit={handleEditOrder} initialData={currentOrder}>
+                <span>Editar Internação</span>
+                <section>                
+                  <Input name="name" type="text" placeholder="Nome do Paciente" />
+                  <Input name="unimedCard" type="text" placeholder="Cartão Unimed"/>
+                  <Input name="unimedProtocol" type="text" placeholder="Atendimento"/>
+                  <Input name="typeOfHospitalization" type="text" placeholder="Tipo de Internação"/>   
+                  <Input name="sex" type="text" placeholder="sexo"/>
+                </section>    
                 <Button type="submit">Confirmar Edição</Button>
-            </Form>             
-        </Modal>
+            </Form>
     )
 }

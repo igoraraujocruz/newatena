@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
+import { useHistory } from '../hooks/useHistory';
 import {Order} from '../interfaces/Order'
 
  
@@ -25,6 +26,7 @@ const OrdersContext = createContext<OrdersContextData>({} as OrdersContextData);
 
 export function OrdersProvider({children}: OrdersProviderProps) {
     const { user } = useAuth()
+    const { createHistory } = useHistory()
     const [orders, setOrders] = useState<Order[]>([]);
 
     useEffect(() => {
@@ -39,10 +41,10 @@ export function OrdersProvider({children}: OrdersProviderProps) {
           
      const order = response.data;
 
-     await api.post('/orders/history/', {
-      message: `Solicitação criada por ${user.name}`,
-      order_id: order.id,
-      user_id: user.id
+     await createHistory({
+       message: `${user.name} criou a solicitação de internação`,
+       order_id: order.id,
+       user_id: user.id
      })
 
      setOrders([
@@ -95,7 +97,7 @@ export function OrdersProvider({children}: OrdersProviderProps) {
   
         setOrders(ordersUpdated);
       } catch (err) {
-        console.log(err);
+
       }
     }
 
@@ -122,7 +124,7 @@ export function OrdersProvider({children}: OrdersProviderProps) {
   
         setOrders(ordersUpdated);
       } catch (err) {
-        console.log(err);
+
       }
     }
 

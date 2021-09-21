@@ -48,6 +48,7 @@ export const Container = styled.div`
         }
 
         td {
+            cursor: pointer;
             padding: 1rem 2rem;
             border: 0;
             background: var(--shape);

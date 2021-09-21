@@ -1,5 +1,6 @@
 import { GlobalStyle } from './styles/global';
 import { OrdersProvider } from './hooks/useOrder'
+import { HistoriesProvider } from './hooks/useHistory'
 import { RoomProvider } from './hooks/useRoom'
 import { BrowserRouter as Router } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -15,12 +16,14 @@ export function App() {
     <ToastProvider>
       <AuthProvider>
         <Router>
+          <HistoriesProvider>
           <OrdersProvider>
             <RoomProvider>
             <Routes />
             <GlobalStyle />
             </RoomProvider>
           </OrdersProvider>
+          </HistoriesProvider>
         </Router>  
       </AuthProvider>
     </ToastProvider>

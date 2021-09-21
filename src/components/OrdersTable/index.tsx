@@ -1,20 +1,13 @@
 import { useOrder } from '../../hooks/useOrder';
-import { Container, Buttons } from './styles';
-import {GrEdit} from 'react-icons/gr';
-import {RiDeleteBin6Line, RiHistoryFill, RiSendPlaneFill} from 'react-icons/ri';
-import {IoDocumentAttachOutline} from 'react-icons/io5';
+import { Container } from './styles';
 import {Order} from '../../interfaces/Order'
 
 
 interface OrdersTableProps {
-    onOpenEditOrderModal: (order: Order) => void;
-    onOpenDeleteOrderModal: (order: Order) => void;
-    onOpenUploadOrderModal: (order: Order) => void;
-    onOpenHistoryOrderModal: (order: Order) => void;
-    onOpenTransferOrderModal: (order: Order) => void;   
+    onOpenOrderModal: (order: Order) => void;
 }
 
-export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpenHistoryOrderModal, onOpenUploadOrderModal, onOpenTransferOrderModal}: OrdersTableProps) {
+export function OrdersTable({onOpenOrderModal}: OrdersTableProps) {
 
     const {orders} = useOrder();
 
@@ -35,7 +28,7 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                 </thead>
                 <tbody>
                     {orders ? orders.filter(order => order.room == null).map(order => (
-                            <tr key={order.id}>
+                            <tr key={order.id} onClick={() => onOpenOrderModal(order)}>   
                             <td data-title="Nome">{order.name}</td>
                             <td data-title="Atendimento">{order.unimedProtocol}</td>
                             <td data-title="Cartão Unimed">{order.unimedCard}</td>
@@ -47,13 +40,6 @@ export function OrdersTable({onOpenEditOrderModal, onOpenDeleteOrderModal, onOpe
                             </td>
                             <td data-title="Reg. de Leitos">{order.roomRequest == null ? <p>Aguardando direcionamento...</p> : <p>{order.roomRequest.map(req => req.room).slice(-1)}</p>}</td>
                             <td data-title="Hotelaria">{order.roomRequest && order.roomRequest.map(req => req.isClean).slice(-1).some(clean => clean === true) ? <p>Quarto liberado!</p> : <p>Aguardando liberação da hotelaria...</p>}</td>
-                            <Buttons>
-                                <GrEdit size={20} className="btnEdit" type="submit" onClick={() => onOpenEditOrderModal(order)}>Editar</GrEdit>
-                                <RiHistoryFill size={20} className="btnHistory" type="submit" onClick={() => onOpenHistoryOrderModal(order)}>Histórico</RiHistoryFill>
-                                <IoDocumentAttachOutline className="btnUpload" size={20} type="submit" onClick={()=> onOpenUploadOrderModal(order)}>Upload</IoDocumentAttachOutline>
-                                <RiDeleteBin6Line size={20} className="deleteBnt" type="submit" onClick={()=> onOpenDeleteOrderModal(order)}>Deletar</RiDeleteBin6Line>
-                                <RiSendPlaneFill size={20} type="submit" onClick={()=> onOpenTransferOrderModal(order)}>Transferir</RiSendPlaneFill>
-                            </Buttons>
                             </tr>
                     ))
                     : <p>Carregando...</p>

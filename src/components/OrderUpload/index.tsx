@@ -1,45 +1,67 @@
+import React, { useCallback, useRef, ChangeEvent, useState } from 'react';
 import { Form } from './styles';
-import { ChangeEvent, useCallback, useState, useRef, useEffect } from 'react';
-import { useToast } from '../../hooks/useToast';
 import Button from '../Button';
-import { useAuth } from '../../hooks/useAuth';
-import {api} from '../../services/api'
-import { FormHandles } from '@unform/core';
+import { useUpload } from '../../hooks/useUpload';
 import Input from '../Input';
 import {Order} from '../../interfaces/Order';
-import { useHistory } from '../../hooks/useHistory';
+import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
+import getValidationErrors from '../../utils/getValidationErrors';
+import { useAuth } from '../../hooks/useAuth';
 
 
-interface UploadOrder {
-  id: string,
-  name: string;
-  user_id: string;
-  order_id: string;
-  url: string;
-  file: string;
-  message: string;
-  createdAt: string;
-}
-
-interface ModalUploadOrderProps {
+interface UploadOrderProps {
   currentOrder: Order;
 }
 
+interface UploadFormData {
+  name: string;
+  file: File;
+  order_id: string;
+  message: string;
+}
 
-export function OrderUpload({currentOrder}: ModalUploadOrderProps) {
-  const { createHistory } = useHistory()
+
+export function OrderUpload({currentOrder}: UploadOrderProps) {
+
+  const {GetUploadById, createUpload, uploads} = useUpload();
   const { user } = useAuth()
-  const { addToast } = useToast();
-  const formRef = useRef<FormHandles>(null);
   const [file, setFile] = useState({} as File);
-  const [name, setName] = useState('');
-  const [message, setMessage] = useState('');
-  const [uploads, setUpload] = useState<UploadOrder[]>([]);
 
-  useEffect(() => {
-    api.get(`/orders/upload/${currentOrder.id}`)
-    .then(response => setUpload(response.data))
-}, [currentOrder.id]);
+  GetUploadById(currentOrder.id)
+
+  const formRef = useRef<FormHandles>(null);
+
+   const handleCreateNewUpload = useCallback(
+    async (data: UploadFormData) => {
+
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          name: Yup.string().required('É necessário informar o nome do arquivo'),
+        })
+
+        await schema.validate(data, {
+          abortEarly: false,
+        })
+
+        createUpload({
+          file: file,
+          name: data.name,
+          message: data.message,
+          order_id: currentOrder.id,
+          user_id: user.id,
+        })
+
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors =  getValidationErrors(error);
+          formRef.current?.setErrors(errors);
+        }
+      }
+    },
+    [createUpload, currentOrder, user, file],
+  );
 
   const handleFile = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,68 +73,31 @@ export function OrderUpload({currentOrder}: ModalUploadOrderProps) {
     [],
   );
 
-  const handleUpload = useCallback(async () => {
-    try {
-      const data = new FormData();
-      data.append("file", file)
-      data.append("name", name)
-      data.append("message", message)
-      data.append("order_id", currentOrder.id)
-      data.append("user_id", user.id)
-
-      await api.post('/orders/upload/', data)
-
-      await createHistory({
-        message: `${user.name} anexou o arquivo ${name}`,
-        order_id: currentOrder.id,
-        user_id: user.id
-      })
-
-      addToast({
-        type: 'success',
-        title: 'Arquivo enviado com sucesso',
-      })
-      
-    } catch {
-      addToast({
-        type: 'error',
-        title: 'Arquivo não enviado',
-      }) 
-    }
-    },
-    [currentOrder, file, user.id, addToast, user.name, name, message, createHistory],
-  );
-
-  
-
     return (
-        <Form ref={formRef} onSubmit={handleUpload}>
-            <span>Arquivos anexados:</span>
-            {uploads.length === 0 && <p>Nenhum documento anexado até o momento...</p>}
-            {uploads.map(upload => <a href={upload.url} key={upload.id} target="blank">{upload.name}</a>)}
-            <input
-              type='file'
-              id='document'
-              onChange={handleFile}
-            />
-            <section>
-              <Input
-              className="nameDocument"
-              name="name"
-              type='text'
-              id='name'
-              placeholder="Insira um nome para o arquivo que deseja enviar"
-              onChange={event => setName(event.target.value)}
-              />
-            </section>            
-          <textarea
-            name="message"
-            id='message'
-            placeholder="Caso seja necessário, insira uma mensagem..."
-            onChange={event => setMessage(event.target.value)}
-            />
-            <Button type="submit">Enviar Arquivo</Button>
-        </Form>
+            <Form ref={formRef} onSubmit={handleCreateNewUpload}>   
+                <span>Arquivos anexados:</span>
+                {uploads.length === 0 && <p>Nenhum documento anexado até o momento...</p>}
+                {uploads.map(upload => <a href={upload.url} key={upload.id} target="blank">{upload.name}</a>)}
+
+                <input
+                data-testid="input-file"
+                type="file"
+                id="file"
+                onChange={handleFile}
+                />
+                <section>
+                  <Input
+                  name="name"
+                  type='text'
+                  placeholder="Insira um nome para o arquivo que deseja enviar"
+                  />
+                </section>            
+                <Input
+                  name="message"
+                  type='text'
+                  placeholder="Insira um nome para o arquivo que deseja enviar"
+                  />
+                <Button type="submit">Enviar Arquivo</Button>
+            </Form>    
     )
 }
-

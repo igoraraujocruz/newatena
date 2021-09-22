@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import {RoomRequest} from '../interfaces/RoomRequest'
 import { useEffect } from 'react'
 import {Order} from '../interfaces/Order'
+import { useHistory } from './useHistory';
 
 type RoomInput = Pick<RoomRequest, 'room' | 'message' | 'order_id'>;
 
@@ -20,9 +21,10 @@ const RoomContext = createContext<RoomContextData>({} as RoomContextData);
 
 export function RoomProvider({children}: RoomProviderProps) {
     const { user } = useAuth()
+    const { createHistory } = useHistory()
     const [room, setRoom] = useState<RoomRequest[]>([]);
 
-    const [orders, setOrders] = useState<Order[]>([]);
+    const [, setOrders] = useState<Order[]>([]);
 
     useEffect(() => {
         api.get('orders')
@@ -36,11 +38,11 @@ export function RoomProvider({children}: RoomProviderProps) {
           
      const roomResponse = response.data;
 
-     await api.post('/orders/history/', {
-      message: `Quarto ${roomInput.room} Solitado por ${user.name}`,
-      order_id: roomResponse.order_id,
-      user_id: user.id
-     })
+     await createHistory({
+        message: `Quarto ${roomInput.room} solicitado por ${user.name}`,
+        order_id: roomInput.order_id,
+        user_id: user.id
+    })
 
      setRoom([...room, roomResponse])
     }

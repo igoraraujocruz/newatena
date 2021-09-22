@@ -42,7 +42,7 @@ export function OrdersProvider({children}: OrdersProviderProps) {
      const order = response.data;
 
      await createHistory({
-       message: `${user.name} criou a solicitação de internação`,
+       message: `Solicitação criada por ${user.name}`,
        order_id: order.id,
        user_id: user.id
      })
@@ -61,8 +61,8 @@ export function OrdersProvider({children}: OrdersProviderProps) {
             orders.splice(orderIndex, 1);
             await api.delete(`/orders/${orderId}`)
 
-            await api.post('/orders/history/', {
-              message: `Solicitação excluída por ${user.name}`,
+            await createHistory({
+              message: `Solicitação excluida por ${user.name}`,
               order_id: orderId,
               user_id: user.id
             })
@@ -88,7 +88,7 @@ export function OrdersProvider({children}: OrdersProviderProps) {
           order.id !== orderUpdated.data.id ? order : orderUpdated.data,
         );
 
-        await api.post('/orders/history/', {
+        await createHistory({
           message: `Solicitação editada por ${user.name}`,
           order_id: order.id,
           user_id: user.id

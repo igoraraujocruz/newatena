@@ -21,23 +21,21 @@ interface HistoryProviderProps {
 interface HistoryContextData {
     histories: IOrderHistory[];
     createHistory: (history: HistoryInput) => Promise<void>;
-    getOrderId: (order_id: string) => void;
+    GetOrderById: (order_id: string) => void;
 }
 
 const HistoryContext = createContext<HistoryContextData>({} as HistoryContextData);
 
 export function HistoriesProvider({children}: HistoryProviderProps) {
-    const [orderId, setOrderId] = useState<string>('');
     const [histories, setHistories] = useState<IOrderHistory[]>([]);
 
-    const getOrderId = (order_id: string) => {
-        setOrderId(order_id)
-    }
+    const GetOrderById = (order_id: string) => {
 
-    useEffect(() => {
-        api.get(`/orders/history/${orderId}`)
-        .then(response => setHistories(response.data))
-    }, [orderId]);
+        useEffect(() => {
+            api.get(`/orders/history/${order_id}`)
+            .then(response => setHistories(response.data))
+        }, [order_id]);
+    }
 
 
     const createHistory = async(historyInput: HistoryInput) => {
@@ -55,7 +53,7 @@ export function HistoriesProvider({children}: HistoryProviderProps) {
 
 
     return (
-        <HistoryContext.Provider value={{ histories, createHistory, getOrderId }}>
+        <HistoryContext.Provider value={{ histories, createHistory, GetOrderById }}>
             {children}
         </HistoryContext.Provider>
     );

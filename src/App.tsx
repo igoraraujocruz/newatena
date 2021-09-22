@@ -1,6 +1,7 @@
 import { GlobalStyle } from './styles/global';
 import { OrdersProvider } from './hooks/useOrder'
 import { HistoriesProvider } from './hooks/useHistory'
+import { UploadsProvider } from './hooks/useUpload'
 import { RoomProvider } from './hooks/useRoom'
 import { BrowserRouter as Router } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -16,6 +17,7 @@ export function App() {
     <ToastProvider>
       <AuthProvider>
         <Router>
+          <UploadsProvider>
           <HistoriesProvider>
           <OrdersProvider>
             <RoomProvider>
@@ -24,6 +26,7 @@ export function App() {
             </RoomProvider>
           </OrdersProvider>
           </HistoriesProvider>
+          </UploadsProvider>
         </Router>  
       </AuthProvider>
     </ToastProvider>

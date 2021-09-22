@@ -50,7 +50,7 @@ export function ModalOrder({isOpen, onRequestClose, currentOrder}: ModalOrderPro
               <OrderRoomRequest currentOrder={currentOrder} />
           </Container>
           <Content>
-            <OrderDelete currentOrder={currentOrder} />
+            <OrderDelete currentOrder={currentOrder} onRequestClose={onRequestClose} />
           </Content>
         </Modal>
 

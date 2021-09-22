@@ -38,7 +38,6 @@ export function Urgency() {
             <ModalOrder isOpen={isOrderModalOpen} onRequestClose={handleCloseOrderModal} currentOrder={currentOrder}/>
             <Container>
                 <Summary onOpenNewOrderModal={handleOpenNewOrderModal} />
-                
                 <OrdersTable onOpenOrderModal={handleOpenOrderModal}/>
             </Container>
         </>

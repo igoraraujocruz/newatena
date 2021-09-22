@@ -29,7 +29,7 @@ export function Painel() {
     useEffect(() => {
         api.get(`users/${user.id}`)
         .then(response => setRole(response.data.roles))
-    }, []);
+    }, [user.id]);
 
     return (
         <>

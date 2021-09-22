@@ -10,12 +10,13 @@ import {Order} from '../../interfaces/Order'
 
 type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester'>;
 
-interface ModalDeleteOrderProps {
+interface DeleteOrderProps {
     currentOrder: Order;
+    onRequestClose: () => void
 }
 
 
-export function OrderDelete({currentOrder}: ModalDeleteOrderProps) {
+export function OrderDelete({currentOrder, onRequestClose}: DeleteOrderProps) {
 
   const [ isDeleteButton, setIsDeleteButton] = useState(false)
 
@@ -33,6 +34,8 @@ export function OrderDelete({currentOrder}: ModalDeleteOrderProps) {
           type: 'success',
           title: 'Solicitação excluida com sucesso',
         })
+
+        onRequestClose()
         
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
@@ -47,7 +50,7 @@ export function OrderDelete({currentOrder}: ModalDeleteOrderProps) {
         })
       }
     },
-    [addToast, currentOrder, removeOrder],
+    [addToast, currentOrder, removeOrder, onRequestClose],
   );
 
     return (

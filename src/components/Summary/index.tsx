@@ -69,7 +69,7 @@ export function Summary({onOpenNewOrderModal}: SummaryProps) {
                 <strong>{orders.filter(order => order?.typeOfHospitalization === 'Covid' && order.room === null).length}</strong>
             </div>
 
-            {roles.map(role => role.name).includes('doctor_urgency') && <Button type="submit" onClick={onOpenNewOrderModal}>Solicitar Internação <FaIcons.FaHospital/></Button>}
+            {roles.map(role => role.name).includes('doctor_urgency') ? <Button type="submit" onClick={onOpenNewOrderModal}>Solicitar Internação <FaIcons.FaHospital/></Button> : <p>Verificando permissões...</p>}
   
             
         </Container>    

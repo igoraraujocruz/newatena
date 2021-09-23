@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, ChangeEvent, useState } from 'react';
+import { useCallback, useRef, ChangeEvent, useState } from 'react';
 import { Form } from './styles';
 import Button from '../Button';
 import { useUpload } from '../../hooks/useUpload';

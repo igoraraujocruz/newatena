@@ -30,7 +30,6 @@ interface UploadContextData {
 const UploadContext = createContext<UploadContextData>({} as UploadContextData);
 
 export function UploadsProvider({children}: UploadProviderProps) {
-
     const { user } = useAuth()
     const { createHistory } = useHistory()
     const [uploads, setUploads] = useState<UploadOrder[]>([]);
@@ -56,18 +55,12 @@ export function UploadsProvider({children}: UploadProviderProps) {
         const response = await api.post('/orders/upload/', data)
             
         const upload = response.data;
-        console.log(upload)
-
-        createHistory({
-            message: 'ola',
-            order_id: upload.order_id,
-            user_id: upload.user_id
-        })        
 
         setUploads([
             ...uploads,
             upload
         ])
+        
     }
 
 

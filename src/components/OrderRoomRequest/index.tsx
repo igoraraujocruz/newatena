@@ -103,7 +103,7 @@ export function OrderRoomRequest({currentOrder}: OrderRoomRequestProps) {
 
     return (
         <> 
-              {roles.map(role => role.name).includes('assistant_urgency' || 'analyst_urgency') && 
+              {roles.map(role => role.name).includes('assistant_urgency' || 'analyst_urgency') ? 
                 <Form ref={formRef} onSubmit={handleRequestRoom}>   
                     <span>Pedido de Quarto</span>
                     
@@ -112,6 +112,8 @@ export function OrderRoomRequest({currentOrder}: OrderRoomRequestProps) {
                     <Button type="submit">Confirmar Pedido</Button>
                     <Button onClick={handleTransferOrder}>Transferir</Button>
                 </Form>
+              :
+              <p>Verificando permissões...</p>
               }              
       </>         
     )

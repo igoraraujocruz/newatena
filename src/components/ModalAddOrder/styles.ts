@@ -22,9 +22,18 @@ const colors = {
     white: '#FFFFFF'
 }
 
+export const TypeOfHospitalizaionButtons = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+`;
+
+
 export const RadioBox = styled.button<RadioBoxProps>`
     height: 4rem;
-    width: 20%;
+    width: 30%;
+    margin-left: 0.25rem;
     border: 1px solid #d7d7d7;
     border-radius: 0.25rem;
     background: ${(props) => props.isActive 
@@ -45,15 +54,17 @@ export const RadioBox = styled.button<RadioBoxProps>`
     }
 
     span {
-        display: inline;
-        margin-left: 1rem;
         font-size: 1rem;
-        color: var(--text-title);
+        color: ${(props) => props.isActive 
+        ? '#fff'
+        : '#0F2F4F'
+        };
     }
 `;
 
-export const SexContainer = styled.div`
-    margin: 1rem 0;
+export const SelectGender = styled.div`
+    margin-top: 1rem;
+    color:red;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
@@ -81,8 +92,10 @@ export const RadioBoxG = styled.button<RadioBoxProps>`
         display: inline;
         margin-left: 1rem;
         font-size: 1rem;
-        color: var(--white);
-        
+        color: ${(props) => props.isActive 
+        ? '#fff'
+        : '#0F2F4F'
+        };        
     }
 `;
 

@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { api } from '../services/api';
-import { useHistory } from './useHistory';
+import { useHistory } from '../hooks/useHistory';
 import { useAuth } from './useAuth';
 
 interface UploadOrder {
@@ -29,10 +29,12 @@ interface UploadContextData {
 
 const UploadContext = createContext<UploadContextData>({} as UploadContextData);
 
+
 export function UploadsProvider({children}: UploadProviderProps) {
     const { user } = useAuth()
     const { createHistory } = useHistory()
     const [uploads, setUploads] = useState<UploadOrder[]>([]);
+
 
 
     const GetUploadById = (order_id: string) => {
@@ -54,13 +56,19 @@ export function UploadsProvider({children}: UploadProviderProps) {
         data.append("user_id", uploadInput.user_id)
         const response = await api.post('/orders/upload/', data)
             
-        const upload = response.data;
+        const upload = response.data; 
+
+        await createHistory({
+            message: `Solicitação criada por ${user.name}`,
+            order_id: upload.order_id,
+            user_id: user.id
+        })
 
         setUploads([
             ...uploads,
             upload
         ])
-        
+  
     }
 
 

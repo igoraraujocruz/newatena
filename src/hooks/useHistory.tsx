@@ -49,6 +49,7 @@ export function HistoriesProvider({children}: HistoryProviderProps) {
          ...histories,
          history
      ])
+    
     }
 
 

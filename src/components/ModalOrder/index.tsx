@@ -17,7 +17,7 @@ interface ModalOrderProps {
 
 const ModalStyles = {
   content: {
-    top: '20%',
+    top: '40%',
     left: '45%',
     right: 'auto',
     bottom: 'auto',

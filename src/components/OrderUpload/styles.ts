@@ -7,9 +7,19 @@ export const Form = styled(Unform)`
     text-align: start;
     color: var(--text-title);
 
+    a { 
+        color: blue;
+        margin-top: 1rem ;
+    } 
+
     span {
         color: var(--text-title);
         display: block;
+    }
+
+    li {
+        list-style-type: none;
+        color: #0F2F4F;
     }
 
     textarea {
@@ -24,6 +34,7 @@ export const Form = styled(Unform)`
 
     section {
         margin-top: 0.50rem;
+        margin-bottom: 2rem;
     }
 
     Button {

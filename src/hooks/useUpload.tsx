@@ -59,7 +59,7 @@ export function UploadsProvider({children}: UploadProviderProps) {
         const upload = response.data; 
 
         await createHistory({
-            message: `Solicitação criada por ${user.name}`,
+            message: `${uploadInput.name} anexado por ${user.name}`,
             order_id: upload.order_id,
             user_id: user.id
         })

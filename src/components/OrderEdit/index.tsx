@@ -1,5 +1,5 @@
 import { FormHandles } from '@unform/core';
-import { useRef, useCallback} from 'react';
+import { useRef, useCallback, useState} from 'react';
 import { useToast } from '../../hooks/useToast';
 import getValidationErrors from '../../utils/getValidationErrors';
 import * as Yup from 'yup';
@@ -7,7 +7,8 @@ import Input from '../Input';
 import Button from '../Button';
 import { useOrder } from '../../hooks/useOrder';
 import {Order} from '../../interfaces/Order'
-import {  Form } from './styles'
+import { Form } from '@unform/web';
+import { RadioBox, RadioBoxG, TypeOfHospitalizaionButtons, SelectGender } from './styles';
 
 type OrderInput = Omit<Order, 'id' | 'createdAt' | 'requester' | 'room' | 'roomRequest'>;
 
@@ -16,6 +17,8 @@ interface OrderEditProps {
 }
 
 export function OrderEdit({currentOrder}: OrderEditProps) {
+  const [typeOfHospitalization, setTypeOfHospitalization] = useState('');
+  const [sex, setSex] = useState('');
 
   const formRef = useRef<FormHandles>(null);
 
@@ -42,8 +45,8 @@ export function OrderEdit({currentOrder}: OrderEditProps) {
         await editOrder({
           id: currentOrder.id,
           name: data.name,
-          sex: data.sex,
-          typeOfHospitalization: data.typeOfHospitalization,
+          sex: sex,
+          typeOfHospitalization: typeOfHospitalization,
           unimedCard: data.unimedCard,
           unimedProtocol: data.unimedProtocol,
         })
@@ -61,21 +64,95 @@ export function OrderEdit({currentOrder}: OrderEditProps) {
         })
       }
     },
-    [addToast, editOrder, currentOrder],
+    [addToast, editOrder, currentOrder, typeOfHospitalization, sex],
   );
 
   
 
     return (
             <Form ref={formRef} onSubmit={handleEditOrder} initialData={currentOrder}>
-                <span>Editar Internação</span>
-                <section>                
+                <span>Editar Internação</span>              
                   <Input name="name" type="text" placeholder="Nome do Paciente" />
                   <Input name="unimedCard" type="text" placeholder="Cartão Unimed"/>
                   <Input name="unimedProtocol" type="text" placeholder="Atendimento"/>
-                  <Input name="typeOfHospitalization" type="text" placeholder="Tipo de Internação"/>   
-                  <Input name="sex" type="text" placeholder="sexo"/>
-                </section>    
+                  <TypeOfHospitalizaionButtons>
+                  <RadioBox 
+                      type="button"
+                      onClick={() => setTypeOfHospitalization('Clínica')}
+                      isActive={typeOfHospitalization === 'Clínica'}
+                      activeColor="blue"
+                      >
+                          <span>Clínica</span>
+                  </RadioBox>
+                  <RadioBox 
+                      type="button"
+                      onClick={() => setTypeOfHospitalization('Cirúrgica')}
+                      isActive={typeOfHospitalization === 'Cirúrgica'}
+                      activeColor="blue"
+                      >
+                          <span>Cirúrgica</span>
+                  </RadioBox>
+                  <RadioBox 
+                      type="button"
+                      onClick={() => setTypeOfHospitalization('Oncológica')}
+                      isActive={typeOfHospitalization  === 'Oncológica'}
+                      activeColor="blue"
+                      >
+                          <span>Oncológica</span>
+                  </RadioBox>
+                  <RadioBox 
+                      type="button"
+                      onClick={() => setTypeOfHospitalization('UTIP')}
+                      isActive={typeOfHospitalization  === 'UTIP'}
+                      activeColor="blue"
+                      >
+                          <span>UTIP</span>
+                  </RadioBox>
+                  <RadioBox 
+                      type="button"
+                      onClick={() => setTypeOfHospitalization('UTIG')}
+                      isActive={typeOfHospitalization  === 'UTIG'}
+                      activeColor="blue"
+                      >
+                          <span>UTIG</span>
+                  </RadioBox>
+                  <RadioBox 
+                      type="button"
+                      onClick={() => setTypeOfHospitalization('UCO')}
+                      isActive={typeOfHospitalization  === 'UCO'}
+                      activeColor="blue"
+                      >
+                          <span>UCO</span>
+                  </RadioBox>
+                  <RadioBox 
+                      type="button"
+                      onClick={() => setTypeOfHospitalization('Covid')}
+                      isActive={typeOfHospitalization  === 'Covid'}
+                      activeColor="blue"
+                      >
+                          <span>Covid</span>
+                  </RadioBox>
+                </TypeOfHospitalizaionButtons>
+                <SelectGender>
+                  <RadioBoxG 
+                      type="button"
+                      onClick={() => setSex('M')}
+                      isActive={currentOrder.sex === 'M'}
+                      activeColor="blue"
+                      >
+                          <span>Masculino</span>
+                  </RadioBoxG>
+
+                  <RadioBoxG 
+                      type="button"
+                      onClick={() => setSex('F')}
+                      isActive={currentOrder.sex === 'F'}
+                      activeColor="blue"
+                      >
+                          <span>Feminino</span>
+                  </RadioBoxG>
+
+                </SelectGender>   
                 <Button type="submit">Confirmar Edição</Button>
             </Form>
     )

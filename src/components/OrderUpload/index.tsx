@@ -77,8 +77,7 @@ export function OrderUpload({currentOrder}: UploadOrderProps) {
             <Form ref={formRef} onSubmit={handleCreateNewUpload}>   
                 <span>Arquivos anexados:</span>
                 {uploads.length === 0 && <p>Nenhum documento anexado até o momento...</p>}
-                {uploads.map(upload => <a href={upload.url} key={upload.id} target="blank">{upload.name}</a>)}
-
+                {uploads.map(upload => <a href={upload.url} key={upload.id} target="blank">{upload.name}<li>{upload.message}</li></a>)}
                 <input
                 data-testid="input-file"
                 type="file"
@@ -91,10 +90,10 @@ export function OrderUpload({currentOrder}: UploadOrderProps) {
                   type='text'
                   placeholder="Insira um nome para o arquivo que deseja enviar"
                   />
-                </section>            
+                </section>         
                 <Input
                   name="message"
-                  type='text'
+                  type="textarea"
                   placeholder="Insira um nome para o arquivo que deseja enviar"
                   />
                 <Button type="submit">Enviar Arquivo</Button>

@@ -38,7 +38,7 @@ export function OrdersTable({onOpenOrderModal}: OrdersTableProps) {
                                 new Date(order.createdAt)
                             )}
                             </td>
-                            <td data-title="Reg. de Leitos">{order.roomRequest == null ? <p>Aguardando direcionamento...</p> : <p>{order.roomRequest.map(req => req.room).slice(-1)}</p>}</td>
+                            <td data-title="Reg. de Leitos">{order.roomRequest == null ? <p>Aguardando direcionamento...</p> : <p>{order.roomRequest.map(req => req.room)[0]}</p>}</td>
                             <td data-title="Hotelaria">{order.roomRequest && order.roomRequest.map(req => req.isClean).slice(-1).some(clean => clean === true) ? <p>Quarto liberado!</p> : <p>Aguardando liberação da hotelaria...</p>}</td>
                             </tr>
                     ))

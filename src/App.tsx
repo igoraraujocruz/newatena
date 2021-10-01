@@ -17,16 +17,16 @@ export function App() {
     <ToastProvider>
       <AuthProvider>
         <Router>
-          <UploadsProvider>
           <HistoriesProvider>
+          <UploadsProvider>
           <OrdersProvider>
             <RoomProvider>
             <Routes />
             <GlobalStyle />
             </RoomProvider>
           </OrdersProvider>
-          </HistoriesProvider>
           </UploadsProvider>
+          </HistoriesProvider>
         </Router>  
       </AuthProvider>
     </ToastProvider>

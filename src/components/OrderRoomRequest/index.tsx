@@ -32,6 +32,8 @@ export function OrderRoomRequest({currentOrder}: OrderRoomRequestProps) {
     const { addToast } = useToast();
     const {transferOrder} = useOrder();
 
+    const lastRoomRequest = currentOrder.roomRequest?.[0]
+
     useEffect(() => {
       api.get(`users/${user.id}`)
       .then(response => setRole(response.data.roles))
@@ -104,11 +106,11 @@ export function OrderRoomRequest({currentOrder}: OrderRoomRequestProps) {
     return (
         <> 
               {roles.map(role => role.name).includes('assistant_urgency' || 'analyst_urgency') ? 
-                <Form ref={formRef} onSubmit={handleRequestRoom}>   
+                <Form ref={formRef} onSubmit={handleRequestRoom} initialData={lastRoomRequest}>   
                     <span>Pedido de Quarto</span>
                     
-                    <Input name="room" type="text" placeholder="Quarto" />
-                    <Input name="message" type="text" placeholder="Cartão Mensagem"/>
+                    <Input name="room" type="text" placeholder="Digite um quarto" />
+                    <Input name="message" type="text" placeholder="Observações"/>
                     <Button type="submit">Confirmar Pedido</Button>
                     <Button onClick={handleTransferOrder}>Transferir</Button>
                 </Form>
